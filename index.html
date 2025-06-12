@@ -65,7 +65,7 @@
             background: none;
             border: none;
             font-size: 2rem;
-            color: #6366f1;
+            color: #c942b9;
             cursor: pointer;
             line-height: 1;
             padding: 0.5rem;
@@ -94,7 +94,7 @@
             border-radius: 0.5rem;
         }
         .modal-content::-webkit-scrollbar-thumb:hover {
-            background-color: #8b5cf6;
+            background-color: #e66bcd;
         }
 
         /* Details/Summary styles for dropdowns */
@@ -658,6 +658,9 @@
             }
         };
 
+        // Store user selections
+        const userSelections = {};
+
         // Function to dynamically load encounters
         function loadEncounters() {
             const mainContainer = document.querySelector('main');
@@ -668,8 +671,24 @@
 
                 detailsElement.innerHTML = `
                     <summary class="cursor-pointer py-4 px-6 text-2xl font-bold text-indigo-700 flex items-center justify-between">
-                        <span>${encounter.emoji} ${encounter.title} – <span class="font-normal text-purple-500 ml-2">${encounter.bibleRef}</span></span>
-                        <span class="arrow-icon transition-transform duration-300 transform rotate-0">▼</span>
+                        <div class="flex items-center gap-4 flex-1">
+                            <span>${encounter.emoji} ${encounter.title} – <span class="font-normal text-purple-500 ml-2">${encounter.bibleRef}</span></span>
+                            <div class="flex items-center gap-2 ml-auto">
+                                <span class="name-display text-purple-600 font-semibold hidden"></span>
+                                <input type="text" 
+                                       placeholder="Enter name" 
+                                       class="name-input px-2 py-1 text-sm border rounded focus:outline-none focus:border-purple-500"
+                                       data-encounter="${key}">
+                                <label class="flex items-center gap-2 text-base font-normal">
+                                    <input type="checkbox" 
+                                           class="select-checkbox w-4 h-4 text-purple-600 rounded focus:ring-purple-500" 
+                                           data-checkbox-${key}
+                                           onchange="updateSelection('${key}', this.previousElementSibling.value, this.checked)">
+                                    Selected
+                                </label>
+                            </div>
+                        </div>
+                        <span class="arrow-icon transition-transform duration-300 transform rotate-0 ml-4">▼</span>
                     </summary>
                     <div class="details-content">
                         ${encounter.mainContentHTML}
@@ -690,7 +709,52 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadEncounters);
+        // Function to update user selections
+        function updateSelection(encounterId, name, isSelected) {
+            const container = document.querySelector(`[data-encounter="${encounterId}"]`).parentElement;
+            const nameInput = container.querySelector('.name-input');
+            const nameDisplay = container.querySelector('.name-display');
+            
+            if (isSelected && name.trim()) {
+                userSelections[encounterId] = name.trim();
+                // Show name in display span and hide input
+                nameDisplay.textContent = name.trim();
+                nameDisplay.classList.remove('hidden');
+                nameInput.classList.add('hidden');
+            } else {
+                delete userSelections[encounterId];
+                // Show input and hide display span
+                nameDisplay.classList.add('hidden');
+                nameInput.classList.remove('hidden');
+                nameInput.value = '';
+            }
+            // Store selections in localStorage
+            localStorage.setItem('bibleStudySelections', JSON.stringify(userSelections));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEncounters();
+            // Load saved selections
+            const savedSelections = localStorage.getItem('bibleStudySelections');
+            if (savedSelections) {
+                const selections = JSON.parse(savedSelections);
+                for (const [key, name] of Object.entries(selections)) {
+                    const nameInput = document.querySelector(`[data-encounter="${key}"]`);
+                    const checkbox = document.querySelector(`[data-checkbox-${key}]`);
+                    const container = nameInput.parentElement;
+                    const nameDisplay = container.querySelector('.name-display');
+                    
+                    if (nameInput && checkbox) {
+                        nameInput.value = name;
+                        checkbox.checked = true;
+                        // Show the name in display span and hide input
+                        nameDisplay.textContent = name;
+                        nameDisplay.classList.remove('hidden');
+                        nameInput.classList.add('hidden');
+                    }
+                }
+            }
+        });
 
 
         const modalOverlay = document.getElementById('modal-overlay');
