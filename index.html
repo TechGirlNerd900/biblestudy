@@ -678,7 +678,9 @@
                                 <input type="text" 
                                        placeholder="Enter name" 
                                        class="name-input px-2 py-1 text-sm border rounded focus:outline-none focus:border-purple-500"
-                                       data-encounter="${key}">
+                                       data-encounter="${key}"
+                                       oninput="saveNameInput('${key}', this.value)"
+                                       onblur="saveNameInput('${key}', this.value)">
                                 <label class="flex items-center gap-2 text-base font-normal">
                                     <input type="checkbox" 
                                            class="select-checkbox w-4 h-4 text-purple-600 rounded focus:ring-purple-500" 
@@ -706,6 +708,22 @@
                     </div>
                 `;
                 mainContainer.appendChild(detailsElement);
+            }
+        }
+
+        // Function to save name input and prompt for checkbox
+        function saveNameInput(encounterId, name) {
+            if (name.trim()) {
+                const checkbox = document.querySelector(`[data-checkbox-${encounterId}]`);
+                if (!checkbox.checked) {
+                    // Show popup asking user to check the box
+                    if (confirm(`You entered "${name.trim()}" for ${encountersData[encounterId].title}. Would you like to select this encounter for your study?`)) {
+                        checkbox.checked = true;
+                        userSelections[encounterId] = name.trim();
+                        localStorage.setItem('bibleStudySelections', JSON.stringify(userSelections));
+                        console.log(`Name and selection saved for ${encounterId}: ${name.trim()}`);
+                    }
+                }
             }
         }
 
