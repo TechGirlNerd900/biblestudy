@@ -674,19 +674,17 @@
                         <div class="flex items-center gap-4 flex-1">
                             <span>${encounter.emoji} ${encounter.title} – <span class="font-normal text-purple-500 ml-2">${encounter.bibleRef}</span></span>
                             <div class="flex items-center gap-2 ml-auto">
-                                <span class="name-display text-purple-600 font-semibold hidden"></span>
                                 <input type="text" 
-                                       placeholder="Enter name" 
-                                       class="name-input px-2 py-1 text-sm border rounded focus:outline-none focus:border-purple-500"
-                                       data-encounter="${key}"
-                                       oninput="saveNameInput('${key}', this.value)"
-                                       onblur="saveNameInput('${key}', this.value)">
-                                <label class="flex items-center gap-2 text-base font-normal">
+                                    class="border-2 border-indigo-200 rounded px-3 py-1 text-base font-normal" 
+                                    placeholder="Your name..." 
+                                    data-input-${key}
+                                >
+                                <label class="inline-flex items-center cursor-pointer">
                                     <input type="checkbox" 
-                                           class="select-checkbox w-4 h-4 text-purple-600 rounded focus:ring-purple-500" 
-                                           data-checkbox-${key}
-                                           onchange="updateSelection('${key}', this.previousElementSibling.value, this.checked)">
-                                    Selected
+                                        class="form-checkbox text-indigo-600 rounded"
+                                        data-checkbox-${key}
+                                    >
+                                    <span class="ml-2 text-base font-normal text-gray-700">Select for study</span>
                                 </label>
                             </div>
                         </div>
@@ -696,38 +694,46 @@
                         ${encounter.mainContentHTML}
                         <div class="flex flex-col gap-4 mt-6">
                             <button onclick="openModal('${key}', 'context')" class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transform hover:scale-105">
-                                Read More Context
+                                🔍 Explore Historical Context
                             </button>
                             <button onclick="generateLLMResponse('${key}', 'prayer')" class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-purple-700 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-105">
-                                ✨ Generate Personalized Prayer
+                                🙏 Generate Personalized Prayer
                             </button>
                             <button onclick="generateLLMResponse('${key}', 'commentary')" class="w-full bg-indigo-500 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 transform hover:scale-105">
-                                ✨ Expand Commentary
+                                📚 Get Deeper Commentary
                             </button>
                         </div>
                     </div>
                 `;
                 mainContainer.appendChild(detailsElement);
-            }
-        }
 
-        // Function to save name input and prompt for checkbox
-        function saveNameInput(encounterId, name) {
-            if (name.trim()) {
-                const checkbox = document.querySelector(`[data-checkbox-${encounterId}]`);
-                if (!checkbox.checked) {
-                    // Show popup asking user to check the box
-                    if (confirm(`You entered "${name.trim()}" for ${encountersData[encounterId].title}. Would you like to select this encounter for your study?`)) {
-                        checkbox.checked = true;
-                        userSelections[encounterId] = name.trim();
-                        localStorage.setItem('bibleStudySelections', JSON.stringify(userSelections));
-                        console.log(`Name and selection saved for ${encounterId}: ${name.trim()}`);
+                // Add event listener for checkbox
+                const checkbox = detailsElement.querySelector(`[data-checkbox-${key}]`);
+                const input = detailsElement.querySelector(`[data-input-${key}]`);
+                
+                checkbox.addEventListener('change', function(e) {
+                    const name = input.value.trim();
+                    if (this.checked) {
+                        if (!name) {
+                            alert('Please enter your name before selecting this encounter.');
+                            this.checked = false;
+                            return;
+                        }
+                        if (confirm(`Would you like to save "${name}" for ${encounter.title}?`)) {
+                            updateSelection(key, name, true);
+                        } else {
+                            this.checked = false;
+                        }
+                    } else {
+                        // Just uncheck without removing the input value
+                        this.checked = true;
+                        alert("Once saved, selections cannot be removed.");
                     }
-                }
+                });
             }
         }
 
-        // Function to update user selections
+        // Update the updateSelection function
         function updateSelection(encounterId, name, isSelected) {
             if (isSelected && name.trim()) {
                 userSelections[encounterId] = name.trim();
@@ -736,7 +742,6 @@
                 delete userSelections[encounterId];
                 console.log(`Selection removed for ${encounterId}`);
             }
-            // Store selections in localStorage
             localStorage.setItem('bibleStudySelections', JSON.stringify(userSelections));
         }
 
@@ -747,12 +752,11 @@
                 try {
                     const selections = JSON.parse(savedSelections);
                     Object.entries(selections).forEach(([key, name]) => {
-                        const nameInput = document.querySelector(`[data-encounter="${key}"]`);
+                        const input = document.querySelector(`[data-input-${key}]`);
                         const checkbox = document.querySelector(`[data-checkbox-${key}]`);
-                        if (nameInput && checkbox) {
-                            nameInput.value = name;
+                        if (input && checkbox) {
+                            input.value = name;
                             checkbox.checked = true;
-                            userSelections[key] = name; // Update the in-memory selections
                         }
                     });
                     console.log('Saved selections restored:', selections);
@@ -853,7 +857,7 @@
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyDau5t4329ezFMf1zF6AFKPZazW6QFvRhY"; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyDau5t4329ezFMf1zF6AFKPZazW6QFvRhY";// gemini
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
