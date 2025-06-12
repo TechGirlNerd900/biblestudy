@@ -711,51 +711,55 @@
 
         // Function to update user selections
         function updateSelection(encounterId, name, isSelected) {
-            const container = document.querySelector(`[data-encounter="${encounterId}"]`).parentElement;
-            const nameInput = container.querySelector('.name-input');
-            const nameDisplay = container.querySelector('.name-display');
-            
             if (isSelected && name.trim()) {
                 userSelections[encounterId] = name.trim();
-                // Show name in display span and hide input
-                nameDisplay.textContent = name.trim();
-                nameDisplay.classList.remove('hidden');
-                nameInput.classList.add('hidden');
+                console.log(`Selection saved for ${encounterId}: ${name}`);
             } else {
                 delete userSelections[encounterId];
-                // Show input and hide display span
-                nameDisplay.classList.add('hidden');
-                nameInput.classList.remove('hidden');
-                nameInput.value = '';
+                console.log(`Selection removed for ${encounterId}`);
             }
             // Store selections in localStorage
             localStorage.setItem('bibleStudySelections', JSON.stringify(userSelections));
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadEncounters();
-            // Load saved selections
+        // Function to restore saved selections
+        function restoreSavedSelections() {
             const savedSelections = localStorage.getItem('bibleStudySelections');
             if (savedSelections) {
-                const selections = JSON.parse(savedSelections);
-                for (const [key, name] of Object.entries(selections)) {
-                    const nameInput = document.querySelector(`[data-encounter="${key}"]`);
-                    const checkbox = document.querySelector(`[data-checkbox-${key}]`);
-                    const container = nameInput.parentElement;
-                    const nameDisplay = container.querySelector('.name-display');
-                    
-                    if (nameInput && checkbox) {
-                        nameInput.value = name;
-                        checkbox.checked = true;
-                        // Show the name in display span and hide input
-                        nameDisplay.textContent = name;
-                        nameDisplay.classList.remove('hidden');
-                        nameInput.classList.add('hidden');
-                    }
+                try {
+                    const selections = JSON.parse(savedSelections);
+                    Object.entries(selections).forEach(([key, name]) => {
+                        const nameInput = document.querySelector(`[data-encounter="${key}"]`);
+                        const checkbox = document.querySelector(`[data-checkbox-${key}]`);
+                        if (nameInput && checkbox) {
+                            nameInput.value = name;
+                            checkbox.checked = true;
+                            userSelections[key] = name; // Update the in-memory selections
+                        }
+                    });
+                    console.log('Saved selections restored:', selections);
+                } catch (error) {
+                    console.error('Error restoring saved selections:', error);
                 }
             }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Loading encounters...');
+            loadEncounters();
+            
+            // Wait a short moment for the DOM to be fully updated
+            setTimeout(() => {
+                console.log('Restoring saved selections...');
+                restoreSavedSelections();
+            }, 100);
         });
 
+        // Add window load handler to verify everything is loaded properly
+        window.addEventListener('load', () => {
+            console.log('Page fully loaded, selections state:', userSelections);
+        });
 
         const modalOverlay = document.getElementById('modal-overlay');
         const modalTitle = document.getElementById('modal-title');
