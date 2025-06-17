@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Encounters: When God Makes Ordinary People Extraordinary</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Modal content */
+        .modal-content {
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+            border: 2px solid #e84ec6; /* Border color matching primary button */
+        }
+        .modal-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #312e81; /* Darker indigo for headings */
+            margin-bottom: 1rem;
+        }
+        .modal-content p {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #c942b9;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .close-button:hover {
+            background-color: #e0e7ff;
+            color: #d177c8;
+        }
+
+        /* Fade in animation for modals */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Scrollbar styling for modal on WebKit browsers */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+            background-color: #f1f1f1;
+            border-radius: 0.5rem;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background-color: #a78bfa;
+            border-radius: 0.5rem;
+        }
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background-color: #e66bcd;
+        }
+
+        /* Details/Summary styles for dropdowns */
+        details {
+            margin-bottom: 1rem;
+            border: 2px solid #e0e7ff; /* Light indigo border for closed state */
+        }
+
+        details[open] {
+            border-color: #a78bfa; /* Purple border when open */
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 1.5rem;
+            background-color: #f5f3ff; /* Light purple background for summary */
+            border-radius: 1rem;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            outline: none; /* Remove default focus outline */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        summary:hover {
+            background-color: #ede9fe; /* Even lighter purple on hover */
+        }
+
+        summary::-webkit-details-marker {
+            display: none; /* Hide default marker */
+        }
+
+        .arrow-icon {
+            font-size: 1.5rem;
+            color: #6366f1; /* Indigo color for arrow */
+            transition: transform 0.3s ease;
+        }
+
+        details[open] .arrow-icon {
+            transform: rotate(180deg); /* Rotate arrow when open */
+        }
+
+        .details-content {
+            padding: 1.5rem;
+            background-color: #fff;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            border-top: 1px solid #e0e7ff; /* Separator line */
+        }
+
+        /* Loading indicator styling */
+        .loading-dot {
+            animation: blink 1s infinite;
+        }
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-100 min-h-screen text-gray-800 antialiased leading-relaxed">
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-800 tracking-tight mb-4">
+                Divine Encounters: When God Makes Ordinary People Extraordinary
+            </h1>
+            <p class="text-lg md:text-xl text-indigo-600 font-semibold italic">
+                A Journey Through Transformative Biblical Moments
+            </p>
+            <hr class="w-24 h-1 bg-purple-500 mx-auto mt-6 rounded-full">
+        </header>
+
+        <section class="mb-12 bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+            <h2 class="text-2xl md:text-3xl font-bold text-purple-700 mb-4">
+                Introduction: The Power of a Divine Encounter
+            </h2>
+            <p class="mb-4 text-gray-700">
+                In the ancient world—particularly in Israel’s religious consciousness—God’s presence was not abstract. A divine encounter meant disruption, transformation, and commissioning. Encounters with God shaped history and human destiny. Today, we explore 12 divine moments that changed the lives of biblical figures. Each story reflects how God not only encountered but also elevated, healed, and transformed these individuals, leading to a better life, greater purpose, and enduring legacy.
+            </p>
+            <p class="text-gray-700">
+                This version merges deep biblical insight with small group reflection prompts. It can be used for teaching, discipleship, or personal growth.
+            </p>
+        </section>
+
+        <!-- Encounter Sections Container -->
+        <main class="flex flex-col gap-6">
+            <!-- Encounters will be dynamically loaded here by JavaScript -->
+        </main>
+
+        <section class="mt-12 mb-12 bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+            <p class="text-center text-xl text-purple-700 font-semibold mb-6">
+                <span class="text-3xl mr-2">📖</span> “Draw near to God, and he will draw near to you.” <span class="font-normal text-gray-500">(James 4:8, ESV)</span>
+            </p>
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center">
+                <span class="text-3xl mr-3">🔍</span> Dive Deeper Challenge:
+            </h3>
+            <p class="text-gray-700 mb-4">
+                Study each character’s full story. How did their lives change after their divine encounter? What patterns do you see?
+            </p>
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center">
+                <span class="text-3xl mr-3">🙏</span> Group Prayer:
+            </h3>
+            <p class="text-gray-700 italic">
+                “God of Abraham, Moses, Mary, and Paul—thank You for meeting ordinary people in extraordinary ways. Draw us closer. Change us deeply. Use us mightily.”
+            </p>
+        </section>
+
+        <section class="mb-12 bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+            <h2 class="text-2xl md:text-3xl font-bold text-purple-700 mb-4">
+                Conclusion: What Happens When God Shows Up?
+            </h2>
+            <p class="text-gray-700 mb-4">
+                God doesn’t just “visit” people—He commissions them, changes them, affirms them, and gives them a future. These twelve stories stretch across centuries, from patriarchs to prophets, kings to commoners, showing that divine encounters are never random—they are invitations into transformation.
+            </p>
+        </section>
+
+    </div>
+
+    <!-- The Modal Overlay and Content -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <button class="close-button" onclick="closeModal()">&times;</button>
+            <h3 id="modal-title"></h3>
+            <div id="modal-body"></div>
+            <div id="llm-response-area" class="mt-8 pt-8 border-t border-gray-200 hidden">
+                <h4 class="text-xl font-bold text-purple-700 mb-4" id="llm-response-title"></h4>
+                <p id="llm-response-content" class="text-gray-700"></p>
+                <p id="loading-indicator" class="text-center text-purple-500 italic mt-4 hidden">
+                    Generating<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const encountersData = {
+            moses: {
+                title: 'Moses at the Burning Bush',
+                bibleRef: 'Exodus 3:1–12',
+                emoji: '✨',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> In ancient Midian, Moses lived as a shepherd, a dramatic fall from Egyptian royalty. Deserts were seen as thin places between heaven and earth. The burning bush (“seneh” in Hebrew) was a theophany, a visible manifestation of Yahweh.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse (NRSV):</strong> "I will be with you; and this shall be the sign for you that it is I who sent you..." (Exod. 3:12)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> God’s presence, not Moses’ qualifications, would empower the mission (cf. 2 Cor. 12:9). The Hebrew phrase "ehyeh imak" (אֶהְיֵה עִםָּךּ) means "I will be with you" and echoes throughout Scripture (cf. Matt. 28:20).</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God calls ordinary people in obscure places to do extraordinary things.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</strong> If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>What “desert” season are you in now?</li>
+                        <li>Are you willing to turn aside when God calls your name?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</b> Lord, speak into my wilderness. I am listening.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Moses’s life after his encounter?</strong> This encounter shifted him from exile to national leader. Later, he would speak face to face with God (Exodus 33:11), lead miracles (Exodus 14), and receive the Law (Exodus 20).</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> In ancient Midian, Moses lived as a shepherd—a far cry from his Egyptian royal upbringing. Deserts were seen as thin places between heaven and earth. The burning bush (“seneh” in Hebrew) was a theophany, a visible manifestation of Yahweh.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</b> If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Moses at the Burning Bush – Exodus 3:1–12
+
+                    Historical Context: In ancient Midian, Moses lived as a shepherd, a dramatic fall from Egyptian royalty. Deserts were seen as thin places between heaven and earth. The burning bush (“seneh” in Hebrew) was a theophany, a visible manifestation of Yahweh. This encounter shifted him from exile to national leader. Later, he would speak face to face with God (Exodus 33:11), lead miracles (Exodus 14), and receive the Law (Exodus 20).
+                    Key Verse: "I will be with you; and this shall be the sign for you that it is I who sent you..." (Exod. 3:12)
+                    Commentary: God’s presence, not Moses’ qualifications, would empower the mission (cf. 2 Cor. 12:9). The Hebrew phrase "ehyeh imak" (אֶהְיֵה עִםָּךּ) means "I will be with you" and echoes throughout Scripture (cf. Matt. 28:20).
+                    Inspiration: God calls ordinary people in obscure places to do extraordinary things.
+                    Life Application: If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.
+                    What changed in Moses’s life after his encounter? This encounter shifted him from exile to national leader. Later, he would speak face to face with God (Exodus 33:11), lead miracles (Exodus 14), and receive the Law (Exodus 20).
+                    How did the cultural context enhance the encounter? In ancient Midian, Moses lived as a shepherd—a far cry from his Egyptian royal upbringing. Deserts were seen as thin places between heaven and earth.
+                    How might this apply to our lives today? If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.
+                `
+            },
+            solomon: {
+                title: 'Solomon’s Dream at Gibeon',
+                bibleRef: '1 Kings 3:3–15',
+                emoji: '👑',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication (cf. Gen. 20:3; Matt. 1:20).</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Ask what I should give you." (1 Kings 3:5)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</strong> Solomon's choice of wisdom (חִכְמָה, chokhmah) over riches reflects Deuteronomy 17:18–20, where a king is called to meditate on God's law.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> When you seek God’s wisdom over personal gain, divine favor follows.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</strong> God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>What are you asking God for most often?</li>
+                        <li>How would your choices change if wisdom were your highest goal?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Lord, give me a heart that treasures wisdom above wealth.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Solomon’s life after his encounter?</strong> He chose wisdom, and as a result, gained wealth and peace. His reign saw unprecedented prosperity (1 Kings 4:20–34). His encounter led to the construction of the temple (1 Kings 6) and worldwide fame (1 Kings 10).</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Solomon’s Dream at Gibeon – 1 Kings 3:3–15
+
+                    Historical Context: Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication (cf. Gen. 20:3; Matt. 1:20).
+                    Key Verse: "Ask what I should give you." (1 Kings 3:5)
+                    Commentary: Solomon's choice of wisdom (חִכְמָה, chokhmah) over riches reflects Deuteronomy 17:18–20, where a king is called to meditate on God's law.
+                    Inspiration: When you seek God’s wisdom over personal gain, divine favor follows.
+                    Life Application: God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.
+                    What changed in Solomon’s life after his encounter? He chose wisdom, and as a result, gained wealth and peace. His reign saw unprecedented prosperity (1 Kings 4:20–34). His encounter led to the construction of the temple (1 Kings 6) and worldwide fame (1 Kings 10).
+                    How did the cultural context enhance the encounter? Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication.
+                    How might this apply to our lives today? God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.
+                `
+            },
+            david: {
+                title: 'David\'s Anointing',
+                bibleRef: '1 Samuel 16:1–13',
+                emoji: '🎯',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Anointing with oil (Hebrew: *mashach*) was a sacred act to set someone apart for God’s purposes. David, the youngest, was overlooked even by his father.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</b> "For the Lord does not see as mortals see... the Lord looks on the heart." (1 Sam. 16:7)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> God delights in hidden humility. This is echoed in 1 Cor. 1:27–28 — "God chose the foolish things... to shame the wise."</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God sees potential in us when others see insignificance.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Are you overlooked or underestimated? Your heart of faith is more important than credentials.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>How do you handle seasons when you’re unseen?</li>
+                        <li>Where might God be calling out your hidden potential?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Father, shape my heart to reflect Yours. Choose me for Your glory.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in David’s life after his encounter?</strong> This encounter began his rise to kingship (2 Samuel 5), victory over Goliath (1 Sam. 17), and a covenantal legacy (2 Sam. 7). He became Israel's greatest king and the standard of messianic hope.</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Anointing marked divine selection. Though young and overlooked, David was chosen.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Are you overlooked or underestimated? Your heart of faith is more important than credentials.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: David's Anointing – 1 Samuel 16:1–13
+
+                    Historical Context: Anointing with oil (Hebrew: *mashach*) was a sacred act to set someone apart for God’s purposes. David, the youngest, was overlooked even by his father. This encounter began his rise to kingship (2 Samuel 5), victory over Goliath (1 Sam. 17), and a covenantal legacy (2 Sam. 7). He became Israel's greatest king and the standard of messianic hope.
+                    Key Verse: "For the Lord does not see as mortals see... the Lord looks on the heart." (1 Sam. 16:7)
+                    Commentary: God delights in hidden humility. This is echoed in 1 Cor. 1:27–28 — "God chose the foolish things... to shame the wise."
+                    Inspiration: God sees potential in us when others see insignificance.
+                    Life Application: Are you overlooked or underestimated? Your heart of faith is more important than credentials.
+                    What changed in David’s life after his encounter? This encounter began his rise to kingship (2 Samuel 5), victory over Goliath (1 Sam. 17), and a covenantal legacy (2 Sam. 7). He became Israel's greatest king and the standard of messianic hope.
+                    How did the cultural context enhance the encounter? Anointing marked divine selection. Though young and overlooked, David was chosen.
+                    How might this apply to our lives today? Are you overlooked or underestimated? Your heart of faith is more important than credentials.
+                `
+            },
+            saul: {
+                title: 'Saul on the Road to Damascus',
+                bibleRef: 'Acts 9:1–19',
+                emoji: '⚡️',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</b> Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Saul, Saul, why do you persecute me?" (Acts 9:4)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The voice identifies with the Church, showing the body of Christ is united with the Head (cf. 1 Cor. 12:12). The transformation of Saul to Paul exemplifies justification by grace (Rom. 5:1).</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> Even the most misguided soul can be radically redirected by grace.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>Is there someone you think God can’t redeem?</li>
+                        <li>What blind spots might He be trying to remove in you?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Jesus, open my eyes to Your truth and redirect my life.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Saul’s life after his encounter?</strong> After healing (Acts 9:18) and baptism, he became Paul the apostle. He traveled widely, authored letters, and planted churches. His encounter redirected Jewish zeal into gospel mission (Acts 13–28).</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Saul on the Road to Damascus – Acts 9:1–19
+
+                    Historical Context: Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians. After healing (Acts 9:18) and baptism, he became Paul the apostle. He traveled widely, authored letters, and planted churches. His encounter redirected Jewish zeal into gospel mission (Acts 13–28).
+                    Key Verse: "Saul, Saul, why do you persecute me?" (Acts 9:4)
+                    Commentary: The voice identifies with the Church, showing the body of Christ is united with the Head (cf. 1 Cor. 12:12). The transformation of Saul to Paul exemplifies justification by grace (Rom. 5:1).
+                    Inspiration: Even the most misguided soul can be radically redirected by grace.
+                    Life Application: No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.
+                    What changed in Saul’s life after his encounter? After healing (Acts 9:18) and baptism, he became Paul the apostle. He traveled widely, authored letters, and planted churches. His encounter redirected Jewish zeal into gospel mission (Acts 13–28).
+                    How did the cultural context enhance the encounter? Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians.
+                    How might this apply to our lives today? No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.
+                `
+            },
+            peter: {
+                title: 'Peter’s Call by the Sea',
+                bibleRef: 'Luke 5:1–11',
+                emoji: '🛶',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Do not be afraid; from now on you will be catching people." (Luke 5:10)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The Greek word for “catching” (ζωγρέω, *zōgreō*) implies rescue to life—a redemptive mission.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God meets you where you are and gives your life a new mission.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> When Jesus steps into your boat (life), He redefines your career and calling.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>What part of your daily life could God be calling from?</li>
+                        <li>Are you willing to leave your nets behind?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Jesus, call me into deeper purpose—whatever it takes.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Peter’s life after his encounter?</strong> He became a leading apostle (Acts 2), walked on water (Matt. 14:29), and healed the sick (Acts 3:6). His life moved from boats to bold preaching in Jerusalem and Rome.</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> When Jesus steps into your boat (life), He redefines your career and calling.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Peter’s Call by the Sea – Luke 5:1–11
+
+                    Historical Context: Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch. He became a leading apostle (Acts 2), walked on water (Matt. 14:29), and healed the sick (Acts 3:6). His life moved from boats to bold preaching in Jerusalem and Rome.
+                    Key Verse: "Do not be afraid; from now on you will be catching people." (Luke 5:10)
+                    Commentary: The Greek word for “catching” (ζωγρέω, *zōgreō*) implies rescue to life—a redemptive mission.
+                    Inspiration: God meets you where you are and gives your life a new mission.
+                    Life Application: When Jesus steps into your boat (life), He redefines your career and calling.
+                    What changed in Peter’s life after his encounter? He became a leading apostle (Acts 2), walked on water (Matt. 14:29), and healed the sick (Acts 3:6). His life moved from boats to bold preaching in Jerusalem and Rome.
+                    How did the cultural context enhance the encounter? Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch.
+                    How might this apply to our lives today? When Jesus steps into your boat (life), He redefines your career and calling.
+                `
+            },
+            isaiah: {
+                title: 'Isaiah’s Vision',
+                bibleRef: 'Isaiah 6:1–8',
+                emoji: '🔥',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Here am I; send me!" (Isa. 6:8)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> Isaiah's unclean lips (שְׂפָתַיִם טְמֵאִים, *sefatayim teme'im*) are cleansed by fire—a symbol of both judgment and purification. Divine calling follows repentance and cleansing.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> Even when we feel unworthy, God’s holiness can cleanse and call us.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Intimacy with God doesn't ignore our sin—it transforms us for mission.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>What in you still needs God’s purifying fire?</li>
+                        <li>Have you answered His call—or just admired the vision?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Holy God, cleanse me. Then send me.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Isaiah’s life after his encounter?</strong> This encounter launched a lifelong prophetic ministry. His messages of hope and judgment shaped Israelite theology. He prophesied the coming of the Messiah (Isaiah 9, 53).</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Intimacy with God doesn't ignore our sin—it transforms us for mission.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Isaiah’s Vision – Isaiah 6:1–8
+
+                    Historical Context: In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning. This encounter launched a lifelong prophetic ministry. His messages of hope and judgment shaped Israelite theology. He prophesied the coming of the Messiah (Isaiah 9, 53).
+                    Key Verse: "Here am I; send me!" (Isa. 6:8)
+                    Commentary: Isaiah's unclean lips (שְׂפָתַיִם טְמֵאִים, *sefatayim teme'im*) are cleansed by fire—a symbol of both judgment and purification. Divine calling follows repentance and cleansing.
+                    Inspiration: Even when we feel unworthy, God’s holiness can cleanse and call us.
+                    Life Application: Intimacy with God doesn't ignore our sin—it transforms us for mission.
+                    What changed in Isaiah’s life after his encounter? This encounter launched a lifelong prophetic ministry. His messages of hope and judgment shaped Israelite theology. He prophesied the coming of the Messiah (Isaiah 9, 53).
+                    How did the cultural context enhance the encounter? In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning.
+                    How might this apply to our lives today? Intimacy with God doesn't ignore our sin—it transforms us for mission.
+                `
+            },
+            jacob: {
+                title: 'Jacob at Bethel',
+                bibleRef: 'Genesis 28:10–22',
+                emoji: '🏕️',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</b> "Surely the Lord is in this place—and I did not know it!" (Gen. 28:16)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The ladder (סֻלָּם, *sullam*) symbolizes connection between heaven and earth. Jesus echoes this in John 1:51.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God is present even when we feel alone, on the run, or undeserving.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> God finds us in exile and invites us into covenant identity.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>Where have you sensed God’s presence unexpectedly?</li>
+                        <li>Are you running from something instead of toward Him?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Father, reveal Your presence in the places I least expect.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Jacob’s life after his encounter?</strong> Afterward, he vowed loyalty to God. He returned wealthier (Gen. 32), wrestled with God (Gen. 32:28), and became Israel, the father of a nation. His divine encounter turned a fugitive into a patriarch.</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</b> God finds us in exile and invites us into covenant identity.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Jacob at Bethel – Genesis 28:10–22
+
+                    Historical Context: Fleeing for his life, Jacob saw heaven open. Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship. Afterward, he vowed loyalty to God. He returned wealthier (Gen. 32), wrestled with God (Gen. 32:28), and became Israel, the father of a nation. His divine encounter turned a fugitive into a patriarch.
+                    Key Verse: "Surely the Lord is in this place—and I did not know it!" (Gen. 28:16)
+                    Commentary: The ladder (סֻלָּם, *sullam*) symbolizes connection between heaven and earth. Jesus echoes this in John 1:51.
+                    Inspiration: God is present even when we feel alone, on the run, or undeserving.
+                    Life Application: God finds us in exile and invites us into covenant identity.
+                    What changed in Jacob’s life after his encounter? Afterward, he vowed loyalty to God. He returned wealthier (Gen. 32), wrestled with God (Gen. 32:28), and became Israel, the father of a nation. His divine encounter turned a fugitive into a patriarch.
+                    How did the cultural context enhance the encounter? Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship.
+                    How might this apply to our lives today? God finds us in exile and invites us into covenant identity.
+                `
+            },
+            jesus: {
+                title: 'Jesus’ Baptism',
+                bibleRef: 'Matthew 3:13–17',
+                emoji: '🕊️',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “This is my Son, the Beloved, with whom I am well pleased.” (Matt. 3:17)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> This moment echoes Psalm 2:7 and Isaiah 42:1—kingly and servant imagery. The voice from heaven affirms identity before Jesus begins ministry.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God affirms identity before performance.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Your obedience, not your perfection, pleases God.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>In what areas are you stepping into obedience?</li>
+                        <li>Where do you need God's affirmation of who you are?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Father, remind me that I am Your beloved, even before I serve.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Jesus’s life after his encounter?</strong> Afterward, He began His ministry (Matt. 4:17), healed multitudes, and taught with authority. This encounter publicly marked Him as the Son of God.</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Your obedience, not your perfection, pleases God.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Jesus’ Baptism – Matthew 3:13–17
+
+                    Historical Context: Though sinless, Jesus submitted to baptism. Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners. The Spirit descended and affirmed His identity. Afterward, He began His ministry (Matt. 4:17), healed multitudes, and taught with authority. This encounter publicly marked Him as the Son of God.
+                    Key Verse: “This is my Son, the Beloved...” (Matt. 3:17)
+                    Commentary: This moment echoes Psalm 2:7 and Isaiah 42:1—kingly and servant imagery. The voice from heaven affirms identity before Jesus begins ministry.
+                    Inspiration: God affirms identity before performance.
+                    Life Application: Your obedience, not your perfection, pleases God.
+                    What changed in Jesus’s life after his encounter? Afterward, He began His ministry (Matt. 4:17), healed multitudes, and taught with authority. This encounter publicly marked Him as the Son of God.
+                    How did the cultural context enhance the encounter? Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners.
+                    How might this apply to our lives today? Your obedience, not your perfection, pleases God.
+                `
+            },
+            mary: {
+                title: 'Mary\'s Encounter with Gabriel',
+                bibleRef: 'Luke 1:26–38',
+                emoji: '🌅',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “Let it be with me according to your word.” (Luke 1:38)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> Mary's submission echoes themes of faith from Abraham and Hannah. Her yes made space for the incarnation.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God works through surrendered lives, not strategic plans.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Your yes, even in uncertainty, can birth divine things.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>What call from God are you hesitant to accept?</li>
+                        <li>How can you practice faith before understanding?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Lord, let it be to me according to Your word.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Mary’s life after his encounter?</strong> Her yes brought the incarnation. Afterward, she witnessed miracles, gave birth to the Messiah, and became a revered figure in Christianity.</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Your yes, even in uncertainty, can birth divine things.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Mary's Encounter with Gabriel – Luke 1:26–38
+
+                    Historical Context: A young girl in Nazareth received history’s most profound message. Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance. Her yes brought the incarnation. Afterward, she witnessed miracles, gave birth to the Messiah, and became a revered figure in Christianity.
+                    Key Verse: 'Let it be with me according to your word.' (Luke 1:38)
+                    Commentary: Mary's submission echoes themes of faith from Abraham and Hannah. Her yes made space for the incarnation.
+                    Inspiration: Faith means saying 'yes' even when you don’t have all the answers. God works through surrendered lives, not strategic plans.
+                    Life Application: Your yes, even in uncertainty, can birth divine things.
+                    What changed in Mary’s life after his encounter? Her yes brought the incarnation. Afterward, she witnessed miracles, gave birth to the Messiah, and became a revered figure in Christianity.
+                    How did the cultural context enhance the encounter? Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance.
+                    How might this apply to our lives today? Your yes, even in uncertainty, can birth divine things.
+                `
+            },
+            abraham: {
+                title: 'Abraham Under the Stars',
+                bibleRef: 'Genesis 15:1–6',
+                emoji: '🌕',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “And he believed the Lord; and the Lord reckoned it to him as righteousness.” (Gen. 15:6)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> This act of trust becomes the foundation for Paul’s theology of justification by faith (Rom. 4; Gal. 3).</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</b> Faith is the door to legacy.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> God's promises are more real than your current reality.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>What promise feels hard to believe right now?</li>
+                        <li>How can you practice trust while you wait?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> God of the stars, I choose to believe even when I don’t see.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Abraham’s life after his encounter?</strong> Later, Isaac was born (Gen. 21), and Abraham became the father of nations (Gen. 17:4–5).</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> God's promises are more real than your current reality.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Abraham Under the Stars – Genesis 15:1–6
+
+                    Historical Context: God appeared to childless Abraham and promised descendants. Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace. That night changed everything. Later, Isaac was born (Gen. 21), and Abraham became the father of nations (Gen. 17:4–5).
+                    Key Verse: “And he believed the Lord; and the Lord reckoned it to him as righteousness.” (Gen. 15:6)
+                    Commentary: This act of trust becomes the foundation for Paul’s theology of justification by faith (Rom. 4; Gal. 3).
+                    Inspiration: Trusting God’s promises unlocks legacy beyond imagination. Faith is the door to legacy.
+                    Life Application: God's promises are more real than your current reality.
+                    What changed in Abraham’s life after his encounter? Later, Isaac was born (Gen. 21), and Abraham became the father of nations (Gen. 17:4–5).
+                    How did the cultural context enhance the encounter? Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace.
+                    How might this apply to our lives today? God's promises are more real than your current reality.
+                `
+            },
+            samuel: {
+                title: 'Samuel Hears God’s Voice',
+                bibleRef: '1 Samuel 3:1–21',
+                emoji: '🛐',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “Speak, Lord, for your servant is listening.” (1 Sam. 3:10)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> God speaks to the available, not just the mature. Intimacy begins with listening.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</b> God calls by name, not by résumé.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Making space to hear God is the beginning of all wisdom.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>What distractions keep you from hearing God’s voice?</li>
+                        <li>Are you positioned in humility to listen?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Speak, Lord. I’m listening with an open heart.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Samuel’s life after his encounter?</strong> He became the last judge and first major prophet (1 Sam. 7). His life was marked by obedience, justice, and spiritual leadership.</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Making space to hear God is the beginning of all wisdom.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Samuel Hears God’s Voice – 1 Samuel 3:1–21
+
+                    Historical Context: A boy in the temple heard the divine call. At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned. He became the last judge and first major prophet (1 Sam. 7). His life was marked by obedience, justice, and spiritual leadership.
+                    Key Verse: “Speak, Lord, for your servant is listening.” (1 Sam. 3:10)
+                    Commentary: God speaks to the available, not just the mature. Intimacy begins with listening.
+                    Inspiration: God speaks to those who listen—even the young. God calls by name, not by résumé.
+                    Life Application: Making space to hear God is the beginning of all wisdom.
+                    What changed in Samuel’s life after his encounter? He became the last judge and first major prophet (1 Sam. 7). His life was marked by obedience, justice, and spiritual leadership.
+                    How did the cultural context enhance the encounter? At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned.
+                    How might this apply to our lives today? Making space to hear God is the beginning of all wisdom.
+                `
+            },
+            elijah: {
+                title: 'Elijah on Mount Horeb',
+                bibleRef: '1 Kings 19:9–18',
+                emoji: '🗻',
+                mainContentHTML: `
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter.</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “…a sound of sheer silence.” (1 Kings 19:12)</p>
+                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The Hebrew phrase דְּמָמָה דַקָּה (*demamah daqqah*) suggests “a delicate whisper.” God met Elijah not in spectacle, but in stillness.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God is near in the quiet.</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Don’t miss God’s voice by only expecting fireworks.</p>
+                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>Where do you need to make space for silence?</li>
+                        <li>How has God spoken gently in your past?</li>
+                    </ul>
+                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Lord, help me hear You in the stillness.</p>
+                `,
+                modalContextHTML: `
+                    <p><strong class="text-purple-600">What changed in Elijah’s life after his encounter?</strong> Elijah was restored and commissioned anew (1 Kings 19:15). He later passed the mantle to Elisha (2 Kings 2).</p>
+                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter.</p>
+                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Don’t miss God’s voice by only expecting fireworks.</p>
+                `,
+                llmPromptContext: `
+                    Divine Encounter: Elijah on Mount Horeb – 1 Kings 19:9–18
+
+                    Historical Context: After great miracles, Elijah was burned out. Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter. God revealed Himself not in fire, but silence. Elijah was restored and commissioned anew (1 Kings 19:15). He later passed the mantle to Elisha (2 Kings 2).
+                    Key Verse: “…a sound of sheer silence.” (1 Kings 19:12)
+                    Commentary: The Hebrew phrase דְּמָמָה דַקָּה (*demamah daqqah*) suggests “a delicate whisper.” God met Elijah not in spectacle, but in stillness.
+                    Inspiration: God is near in the quiet. God often meets us in quiet moments, not just dramatic ones.
+                    Life Application: Don’t miss God’s voice by only expecting fireworks.
+                    What changed in Elijah’s life after his encounter? Elijah was restored and commissioned anew (1 Kings 19:15). He later passed the mantle to Elisha (2 Kings 2).
+                    How did the cultural context enhance the encounter? Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter.
+                    How might this apply to our lives today? Don’t miss God’s voice by only expecting fireworks.
+                `
+            }
+        };
+
+        // Store user selections
+        const userSelections = {};
+
+        // Function to dynamically load encounters
+        function loadEncounters() {
+            const mainContainer = document.querySelector('main');
+            for (const key in encountersData) {
+                const encounter = encountersData[key];
+                const detailsElement = document.createElement('details');
+                detailsElement.classList.add('bg-white', 'p-0', 'rounded-2xl', 'shadow-lg', 'hover:shadow-xl', 'transition-shadow', 'duration-300', 'border', 'border-indigo-200');
+
+                detailsElement.innerHTML = `
+                    <summary class="cursor-pointer py-4 px-6 text-2xl font-bold text-indigo-700 flex items-center justify-between">
+                        <div class="flex items-center gap-4 flex-1">
+                            <span>${encounter.emoji} ${encounter.title} – <span class="font-normal text-purple-500 ml-2">${encounter.bibleRef}</span></span>
+                            <div class="flex items-center gap-2 ml-auto">
+                                <input type="text"
+                                    class="border-2 border-indigo-200 rounded px-3 py-1 text-base font-normal"
+                                    placeholder="Your name..."
+                                    data-input-${key}
+                                >
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox"
+                                        class="form-checkbox text-indigo-600 rounded"
+                                        data-checkbox-${key}
+                                    >
+                                    <span class="ml-2 text-base font-normal text-gray-700">Select for study</span>
+                                </label>
+                            </div>
+                        </div>
+                        <span class="arrow-icon transition-transform duration-300 transform rotate-0 ml-4">▼</span>
+                    </summary>
+                    <div class="details-content">
+                        ${encounter.mainContentHTML}
+                        <div class="flex flex-col gap-4 mt-6">
+                            <button onclick="openModal('${key}', 'context')" class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transform hover:scale-105">
+                                🔍 Explore Historical Context
+                            </button>
+                            <button onclick="generateLLMResponse('${key}', 'prayer')" class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-purple-700 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-105">
+                                🙏 Generate Personalized Prayer
+                            </button>
+                            <button onclick="generateLLMResponse('${key}', 'commentary')" class="w-full bg-indigo-500 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 transform hover:scale-105">
+                                📚 Get Deeper Commentary
+                            </button>
+                        </div>
+                    </div>
+                `;
+                mainContainer.appendChild(detailsElement);
+
+                // Add event listener for checkbox
+                const checkbox = detailsElement.querySelector(`[data-checkbox-${key}]`);
+                const input = detailsElement.querySelector(`[data-input-${key}]`);
+
+                checkbox.addEventListener('change', function(e) {
+                    const name = input.value.trim();
+                    if (this.checked) { // User is trying to check the box
+                        if (name) {
+                            // Confirm permanent save
+                            if (confirm(`Would you like to save "${name}" for ${encounter.title} permanently? This cannot be undone.`)) {
+                                updateSelection(key, name); // Save the selection (isSelected is implicitly true for save)
+                                input.readOnly = true; // Make input read-only
+                                input.classList.add('bg-gray-100', 'cursor-not-allowed'); // Add styling for disabled input
+                                this.disabled = true; // Disable checkbox
+                            } else {
+                                this.checked = false; // User cancelled, so uncheck the box
+                            }
+                        } else {
+                            // Name is empty, alert and prevent checking
+                            alert('Please enter your name before selecting this encounter.');
+                            this.checked = false;
+                        }
+                    } else { // User is trying to uncheck the box
+                        // If userSelections[key] exists, it means it was permanently saved.
+                        if (userSelections[key]) {
+                            alert(`"${userSelections[key]}" is already saved for ${encounter.title} and cannot be unchecked.`);
+                            this.checked = true; // Force it back to checked
+                        }
+                        // If it was never saved (userSelections[key] doesn't exist),
+                        // and they unchecked it, no action is needed as per the requirement
+                        // for permanence on saving.
+                    }
+                });
+            }
+        }
+
+        // Update the updateSelection function
+        function updateSelection(encounterId, name) {
+            // With permanence, we only add/update to userSelections.
+            userSelections[encounterId] = name.trim();
+            localStorage.setItem('bibleStudySelections', JSON.stringify(userSelections));
+            console.log(`Permanent selection saved for ${encounterId}: ${name}`);
+        }
+
+        // Function to restore saved selections
+        function restoreSavedSelections() {
+            const savedSelections = localStorage.getItem('bibleStudySelections');
+            if (savedSelections) {
+                try {
+                    const selections = JSON.parse(savedSelections);
+                    Object.entries(selections).forEach(([key, name]) => {
+                        const input = document.querySelector(`[data-input-${key}]`);
+                        const checkbox = document.querySelector(`[data-checkbox-${key}]`);
+                        if (input && checkbox) {
+                            input.value = name;
+                            input.readOnly = true; // Make input read-only
+                            input.classList.add('bg-gray-100', 'cursor-not-allowed'); // Add styling for disabled input
+                            checkbox.checked = true;
+                            checkbox.disabled = true; // Disable checkbox
+                            // Also update the in-memory userSelections to reflect restored state
+                            userSelections[key] = name;
+                        }
+                    });
+                    console.log('Saved selections restored:', selections);
+                } catch (error) {
+                    console.error('Error restoring saved selections:', error);
+                }
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Loading encounters...');
+            loadEncounters();
+
+            // Wait a short moment for the DOM to be fully updated before restoring
+            // to ensure all elements are present.
+            setTimeout(() => {
+                console.log('Restoring saved selections...');
+                restoreSavedSelections();
+            }, 100);
+        });
+
+        // Add window load handler to verify everything is loaded properly
+        window.addEventListener('load', () => {
+            console.log('Page fully loaded, selections state:', userSelections);
+        });
+
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const llmResponseArea = document.getElementById('llm-response-area');
+        const llmResponseTitle = document.getElementById('llm-response-title');
+        const llmResponseContent = document.getElementById('llm-response-content');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        function openModal(encounterId, type) {
+            const data = encountersData[encounterId];
+            llmResponseArea.classList.add('hidden'); // Hide LLM response area by default
+
+            if (type === 'context') {
+                modalTitle.innerText = `${data.title}: Extra Context`;
+                modalBody.innerHTML = data.modalContextHTML;
+                llmResponseArea.classList.add('hidden'); // Ensure LLM section is hidden for context
+            } else {
+                // This case is handled by generateLLMResponse, which will update modal content
+                // Just ensuring the modal opens
+                modalTitle.innerText = ''; // Clear title for LLM content until generated
+                modalBody.innerHTML = '';  // Clear body for LLM content until generated
+            }
+
+            modalOverlay.classList.add('visible');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('visible');
+            llmResponseArea.classList.add('hidden'); // Always hide LLM response area on close
+            llmResponseContent.innerText = ''; // Clear LLM content
+            loadingIndicator.classList.add('hidden'); // Hide loading indicator
+        }
+
+        // Close modal when clicking outside content
+        modalOverlay.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
+                closeModal();
+            }
+        });
+
+        async function generateLLMResponse(encounterId, responseType) {
+            const encounter = encountersData[encounterId];
+            let prompt = '';
+            let responseTitle = '';
+
+            if (responseType === 'prayer') {
+                prompt = `Generate a personalized prayer inspired by the divine encounter of ${encounter.title} from ${encounter.bibleRef}. Focus on the key verse and inspiration, incorporating themes of ${encounter.title}. The prayer should be concise and heartfelt.`;
+                responseTitle = `Personalized Prayer for ${encounter.title}`;
+            } else if (responseType === 'commentary') {
+                prompt = `Expand on the commentary for the divine encounter of ${encounter.title} from ${encounter.bibleRef}. Use the following context to provide deeper insights and theological reflection:
+                ${encounter.llmPromptContext}
+                Aim for about 200-300 words, focusing on historical context, key verse, and life application.`;
+                responseTitle = `Expanded Commentary for ${encounter.title}`;
+            }
+
+            openModal(encounterId, responseType); // Open modal with generic title, then update
+            modalTitle.innerText = responseTitle; // Set the title immediately
+            modalBody.innerHTML = ''; // Clear main modal body
+            llmResponseArea.classList.remove('hidden'); // Show LLM response area
+            llmResponseTitle.innerText = ''; // Clear previous LLM title
+            llmResponseContent.innerText = ''; // Clear previous LLM content
+            loadingIndicator.classList.remove('hidden'); // Show loading indicator
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = "AIzaSyDau5t4329ezFMf1zF6AFKPZazW6QFvRhY"; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                // Check if the response content type is JSON before parsing
+                const contentType = response.headers.get('Content-Type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const textResponse = await response.text(); // Read as text for better error reporting
+                    console.error('API Error: Expected JSON, got non-JSON response.', textResponse);
+                    llmResponseContent.innerHTML = `<p class="text-red-600">Error: Unexpected response format from API. Received: <pre>${textResponse.substring(0, 200)}...</pre></p>`;
+                    return;
+                }
+
+                let result;
+                try {
+                    result = await response.json();
+                } catch (jsonError) {
+                    // Catch JSON parsing errors specifically
+                    const rawText = await response.text(); // Attempt to get raw text for debugging
+                    console.error('JSON parsing error:', jsonError, 'Raw response:', rawText);
+                    llmResponseContent.innerHTML = `<p class="text-red-600">Error parsing API response. Data might be incomplete or malformed. Details: ${jsonError.message}. Raw: ${rawText.substring(0, 200)}...</p>`;
+                    return;
+                }
+
+                if (!response.ok) {
+                    console.error('API Error:', result);
+                    llmResponseContent.innerHTML = `<p class="text-red-600">Error generating content: ${result.error ? result.error.message : 'Unknown error'}.</p>`;
+                    return;
+                }
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    llmResponseContent.innerText = text;
+                } else {
+                    llmResponseContent.innerText = 'No content generated. Please try again.';
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                llmResponseContent.innerText = `An error occurred: ${error.message}. Please check your network connection or try again.`;
+            } finally {
+                loadingIndicator.classList.add('hidden'); // Hide loading indicator
+            }
+        }
+    </script>
+</body>
+</html>

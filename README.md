@@ -1,11 +1,7 @@
-# Divine Encounters Bible Study
+# Divine Bible Study Encounters
 
 An interactive Bible study exploring transformative divine encounters in Scripture. Built with HTML, TailwindCSS, and JavaScript.
 
 ## Features
 
-- Detailed studies of 12 significant biblical encounters
-- Interactive content with expandable sections
-- Modal views for deeper context
-- AI-powered commentary and prayer generation
-- Mobile-responsive design
+join us and read en envounter Jesus my Lord and my love

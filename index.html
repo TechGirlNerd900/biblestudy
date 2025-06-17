@@ -1,924 +1,586 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divine Encounters: When God Makes Ordinary People Extraordinary</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Walking with the Holy Spirit</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* General Styles & Font Weights */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500; /* Bolder base font */
         }
-        /* Modal overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px); /* Safari support */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        /* Modal content */
-        .modal-content {
-            background-color: #fff;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            max-width: 90%;
-            max-height: 90%;
-            overflow-y: auto;
-            position: relative;
-            animation: fadeIn 0.3s ease-out;
-            border: 2px solid #e84ec6; /* Border color matching primary button */
-        }
-        .modal-content h3 {
-            font-size: 1.5rem;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
             font-weight: 700;
-            color: #312e81; /* Darker indigo for headings */
-            margin-bottom: 1rem;
         }
-        .modal-content p {
-            margin-bottom: 0.75rem;
-            line-height: 1.6;
-            color: #4b5563;
+        p, li {
+           font-weight: 400; /* Keep paragraph text readable */
         }
-        .close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: #c942b9;
+        h4 {
+           font-weight: 600; /* Bolder subheadings */
+        }
+        blockquote {
+            border-left: 4px solid var(--active-card-border);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: var(--text-subtle);
+        }
+
+        /* Light Mode Colors */
+        .light {
+            --bg-gradient-start: #dbeafe; /* Lighter Blue */
+            --bg-gradient-end: #fde6f0;
+            --text-primary: #374151;
+            --text-heading: #1e3a8a; /* Darker Blue */
+            --text-subtle: #4b5563;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+            --active-card-border: #1e3a8a; /* Darker Blue */
+            --modal-bg: #ffffff;
+            --modal-header-bg: rgba(255, 255, 255, 0.8);
+            --link-color: #ec4899;
+            --link-hover-color: #be185d;
+            --link-border-color: #f9a8d4;
+            --gemini-btn-bg: #1e3a8a;
+            --gemini-btn-text: #ffffff;
+            --gemini-btn-hover-bg: #1c357a;
+        }
+
+        /* Dark Mode Colors */
+        .dark {
+            --bg-gradient-start: #111827;
+            --bg-gradient-end: #4a044e;
+            --text-primary: #d1d5db;
+            --text-heading: #e0f2fe;
+            --text-subtle: #9ca3af;
+            --card-bg: rgba(31, 41, 55, 0.5);
+            --card-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+            --active-card-border: #93c5fd;
+            --modal-bg: #1f2937;
+            --modal-header-bg: rgba(31, 41, 55, 0.8);
+            --link-color: #f9a8d4;
+            --link-hover-color: #fbcfe8;
+            --link-border-color: #ec4899;
+            --gemini-btn-bg: #93c5fd;
+            --gemini-btn-text: #111827;
+            --gemini-btn-hover-bg: #60a5fa;
+        }
+
+        /* Theming & Transitions */
+        body {
+            background: linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-primary);
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+        
+        /* Bouncy Animation for Tabs */
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .bouncing {
+            animation: bounce 0.4s ease-out;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
             cursor: pointer;
-            line-height: 1;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: background-color 0.2s ease, color 0.2s ease;
         }
-        .close-button:hover {
-            background-color: #e0e7ff;
-            color: #d177c8;
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow);
         }
-
-        /* Fade in animation for modals */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        .nav-card.active {
+            border-color: var(--active-card-border);
+            transform: scale(1.03);
+            box-shadow: var(--card-shadow);
         }
 
-        /* Scrollbar styling for modal on WebKit browsers */
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-            background-color: #f1f1f1;
-            border-radius: 0.5rem;
+        /* Gemini Buttons */
+        .gemini-btn {
+            background-color: var(--gemini-btn-bg);
+            color: var(--gemini-btn-text);
+            transition: background-color 0.3s, transform 0.2s;
         }
-        .modal-content::-webkit-scrollbar-thumb {
-            background-color: #a78bfa;
-            border-radius: 0.5rem;
-        }
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background-color: #e66bcd;
+        .gemini-btn:hover {
+            background-color: var(--gemini-btn-hover-bg);
+            transform: translateY(-2px);
         }
 
-        /* Details/Summary styles for dropdowns */
-        details {
-            margin-bottom: 1rem;
-            border: 2px solid #e0e7ff; /* Light indigo border for closed state */
-        }
-
-        details[open] {
-            border-color: #a78bfa; /* Purple border when open */
-        }
-
-        summary {
+        /* Other UI animations and styles */
+        .content-section { display: none; animation: fadeIn 0.8s ease-in-out; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .modal-overlay { animation: fadeIn 0.3s ease; }
+        .modal-content { animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        .context-link {
             cursor: pointer;
-            padding: 1.5rem;
-            background-color: #f5f3ff; /* Light purple background for summary */
-            border-radius: 1rem;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            outline: none; /* Remove default focus outline */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            color: var(--link-color);
+            border-bottom: 1px dotted var(--link-border-color);
+            transition: color 0.2s, border-color 0.2s;
         }
-
-        summary:hover {
-            background-color: #ede9fe; /* Even lighter purple on hover */
-        }
-
-        summary::-webkit-details-marker {
-            display: none; /* Hide default marker */
-        }
-
-        .arrow-icon {
-            font-size: 1.5rem;
-            color: #6366f1; /* Indigo color for arrow */
-            transition: transform 0.3s ease;
-        }
-
-        details[open] .arrow-icon {
-            transform: rotate(180deg); /* Rotate arrow when open */
-        }
-
-        .details-content {
-            padding: 1.5rem;
-            background-color: #fff;
-            border-bottom-left-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            border-top: 1px solid #e0e7ff; /* Separator line */
-        }
-
-        /* Loading indicator styling */
-        .loading-dot {
-            animation: blink 1s infinite;
-        }
-        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
+        .context-link:hover { color: var(--link-hover-color); border-bottom-color: var(--link-hover-color); }
+        
+        .loading-spinner { border: 4px solid rgba(255, 255, 255, 0.2); border-radius: 50%; border-left-color: var(--active-card-border); width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 to-purple-100 min-h-screen text-gray-800 antialiased leading-relaxed">
+<body class="light">
 
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-800 tracking-tight mb-4">
-                Divine Encounters: When God Makes Ordinary People Extraordinary
-            </h1>
-            <p class="text-lg md:text-xl text-indigo-600 font-semibold italic">
-                A Journey Through Transformative Biblical Moments
-            </p>
-            <hr class="w-24 h-1 bg-purple-500 mx-auto mt-6 rounded-full">
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 md:p-8 relative">
+        
+        <!-- Dark/Light Mode Toggle -->
+        <div class="absolute top-4 right-4 z-10">
+            <button id="theme-toggle" class="p-2 rounded-full text-[var(--text-heading)] bg-[var(--card-bg)] shadow-md transition-transform duration-300 hover:scale-110">
+                <svg id="theme-toggle-light-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="theme-toggle-dark-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+
+        <!-- Header -->
+        <header class="text-center mb-12 pt-8">
+            <h1 class="text-4xl md:text-5xl" style="color: var(--text-heading);">Walking with the Holy Spirit</h1>
+            <p class="text-lg max-w-2xl mx-auto mt-3" style="color: var(--text-subtle);">An interactive 4-day journey into the power and presence of the Spirit. Click a day to begin.</p>
         </header>
 
-        <section class="mb-12 bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
-            <h2 class="text-2xl md:text-3xl font-bold text-purple-700 mb-4">
-                Introduction: The Power of a Divine Encounter
-            </h2>
-            <p class="mb-4 text-gray-700">
-                In the ancient world—particularly in Israel’s religious consciousness—God’s presence was not abstract. A divine encounter meant disruption, transformation, and commissioning. Encounters with God shaped history and human destiny. Today, we explore 12 divine moments that changed the lives of biblical figures. Each story reflects how God not only encountered but also elevated, healed, and transformed these individuals, leading to a better life, greater purpose, and enduring legacy.
-            </p>
-            <p class="text-gray-700">
-                This version merges deep biblical insight with small group reflection prompts. It can be used for teaching, discipleship, or personal growth.
-            </p>
-        </section>
+        <!-- Navigation Cards -->
+        <nav id="nav-menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="card nav-card p-6 rounded-xl border-2 border-transparent" data-day="1">
+                <div class="font-bold text-sm mb-1" style="color: var(--text-heading);">DAY ONE</div>
+                <h3 class="text-xl" style="color: var(--text-heading);">The Power and Wonder of the Holy Spirit</h3>
+            </div>
+            <div class="card nav-card p-6 rounded-xl border-2 border-transparent" data-day="2">
+                <div class="font-bold text-sm mb-1" style="color: var(--text-heading);">DAY TWO</div>
+                <h3 class="text-xl" style="color: var(--text-heading);">Receive and Live Worthy of the Holy Spirit</h3>
+            </div>
+            <div class="card nav-card p-6 rounded-xl border-2 border-transparent" data-day="3">
+                <div class="font-bold text-sm mb-1" style="color: var(--text-heading);">DAY THREE</div>
+                <h3 class="text-xl" style="color: var(--text-heading);">The Promise Fulfilled: Pentecost</h3>
+            </div>
+            <div class="card nav-card p-6 rounded-xl border-2 border-transparent" data-day="4">
+                <div class="font-bold text-sm mb-1" style="color: var(--text-heading);">DAY FOUR</div>
+                <h3 class="text-xl" style="color: var(--text-heading);">Walking Daily with the Holy Spirit</h3>
+            </div>
+        </nav>
 
-        <!-- Encounter Sections Container -->
-        <main class="flex flex-col gap-6">
-            <!-- Encounters will be dynamically loaded here by JavaScript -->
+        <!-- Content Area -->
+        <main id="content-area" class="rounded-2xl shadow-xl p-6 md:p-10" style="background-color: var(--card-bg);">
+            <div id="initial-message" class="text-center py-16">
+                <h2 class="text-2xl" style="color: var(--text-heading);">Select a day above to begin your journey.</h2>
+                <p class="mt-2" style="color: var(--text-subtle);">Explore the sermons and click on the <span style="color: var(--link-color);" class="font-medium">pink highlighted</span> words for deeper insights.</p>
+            </div>
+
+            <!-- Day 1 Content -->
+            <section id="day-1" class="content-section space-y-4">
+                <h2 class="text-3xl mb-2" style="color: var(--text-heading);">Day 1: The Power and Wonder of the Holy Spirit</h2>
+                <p class="text-sm mb-4" style="color: var(--text-subtle);">Main Text: Acts 5:12-16; Acts 8:26-40; Acts 16:6-10</p>
+                <p class="text-sm italic p-2 rounded-lg" style="color: var(--text-subtle); background-color: rgba(0,0,0,0.05);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1 -mt-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                    Click on <span style="color: var(--link-color);" class="font-semibold">pink text</span> for deeper insights.
+                </p>
+                <h5 class="text-lg font-semibold mt-4" style="color: var(--text-heading);">Introduction</h5>
+                <p>The Holy Spirit is not an abstract energy or just a force — He is the living Spirit of God, present and active in our world. The same Spirit that hovered over the waters at creation (Genesis 1:2), the same Spirit that empowered prophets and kings, now dwells within believers. Today we will explore the astonishing power of the Holy Spirit — a power that delivers, guides, empowers, reveals, protects, and transforms.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">1. The Holy Spirit Empowers for Supernatural Miracles</h4>
+                <p>The Spirit worked through the apostles to heal the sick, deliver the oppressed, and even bring multitudes into faith. The power was so great that <span class="context-link" data-term="the significance of Peter's shadow healing in Acts 5">Peter’s shadow</span> carried healing — a sign of God’s overwhelming power, not human merit.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Similar to how the Spirit of God came upon Elijah and Elisha, bringing the dead to life (1 Kings 17:17-24; 2 Kings 4:32-37). But now, in Acts, this power is multiplied and spread throughout the whole community of believers.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">2. The Holy Spirit Guides and Speaks Clearly</h4>
+                <p>The Holy Spirit gives precise direction. Philip was told exactly where to go to meet the <span class="context-link" data-term="the story and importance of the Ethiopian Eunuch in Acts 8">Ethiopian eunuch</span>. Through that encounter, the Gospel reached Africa early in Christian history.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Like how the Spirit led Abraham to an unknown land (Genesis 12:1) — the Spirit still leads today, often in surprising ways.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">3. The Holy Spirit Protects and Delivers from Danger</h4>
+                <p>The Spirit not only opens doors but also closes doors to protect and redirect. The Spirit prevented Paul from entering certain regions, leading him instead to Macedonia through the <span class="context-link" data-term="Paul's Macedonian Call in Acts 16 and its impact">Macedonian Call</span>, changing the course of Christian expansion.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Similar to how the Spirit protected Joseph, interpreting Pharaoh’s dreams (Genesis 41) and saving Egypt and Israel from famine.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">4. The Holy Spirit Reveals Hidden Truth</h4>
+                <p>The Spirit exposed the secret sin of <span class="context-link" data-term="the story of Ananias and Sapphira in Acts 5">Ananias and Sapphira</span>, leading to their instant judgment. The Spirit knows what no man can see — He sees the heart.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>The Spirit revealed secret things to Daniel in Babylon (Daniel 2:19-22), interpreting Nebuchadnezzar's hidden dreams.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">5. The Holy Spirit Inspires Boldness and Fearless Preaching</h4>
+                <p>The Spirit removes fear and instills courage, even in the face of persecution. The apostles, once hiding in fear, now stand boldly before religious leaders.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Like how the Spirit emboldened Gideon, who went from hiding to leading Israel to victory (Judges 6:34).</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">6. The Holy Spirit Fosters Unity and Fear of God</h4>
+                <p>The Spirit fostered a community where generosity, unity, love, and awe of God flourished. When the Spirit is present, human selfishness is replaced with divine love and fear of God’s holiness.</p>
+                
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                    <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Conclusion: Why This Power Matters</h5>
+                    <p>The Holy Spirit is not limited by time, distance, or circumstances. He empowers ordinary people for extraordinary purposes. He protects, leads, reveals, strengthens, corrects, heals, and transforms. The same Spirit who worked through apostles works today in believers who welcome Him fully.</p>
+                    <blockquote class="mt-4">Today, we’re not talking about ancient history. The Holy Spirit wants to work in you. He wants to lead you, protect you, open your eyes, and fill you with divine boldness. Yield yourself fully — and watch how His marvelous power will transform your life.</blockquote>
+                </div>
+                
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                    <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Key Scriptures for Meditation</h5>
+                    <ul class="list-disc list-inside">
+                        <li>Genesis 1:2</li>
+                        <li>Joel 2:28-29</li>
+                        <li>Acts 2:1-4</li>
+                        <li>Acts 5:1-16</li>
+                        <li>Acts 8:26-29</li>
+                        <li>Acts 16:6-10</li>
+                        <li>John 14:16-17</li>
+                        <li>John 16:13</li>
+                    </ul>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-300 dark:border-gray-600 flex flex-col sm:flex-row gap-4">
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="reflect">✨ Reflect & Pray</button>
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="summarize">✨ Summarize Today's Message</button>
+                </div>
+            </section>
+            
+            <section id="day-2" class="content-section space-y-4">
+                <h2 class="text-3xl mb-2" style="color: var(--text-heading);">Day 2: How We Can Receive and Live Worthy of the Holy Spirit</h2>
+                <p class="text-sm mb-4" style="color: var(--text-subtle);">Main Text: Acts 2:37-39; Acts 10:34-48; John 14:15-17</p>
+                <p class="text-sm italic p-2 rounded-lg" style="color: var(--text-subtle); background-color: rgba(0,0,0,0.05);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1 -mt-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                    Click on <span style="color: var(--link-color);" class="font-semibold">pink text</span> for deeper insights.
+                </p>
+                <h5 class="text-lg font-semibold mt-4" style="color: var(--text-heading);">Introduction</h5>
+                <p>Many people admire the work of the Holy Spirit, but few ask: How can I be a vessel for His power? The Spirit is not given randomly or accidentally. God desires to pour out His Spirit on those whose hearts are prepared to receive Him. Today, we will explore what Scripture teaches about receiving the Holy Spirit and living a life worthy of His indwelling presence.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">1. The Holy Spirit Is a Gift — But One Must Be Prepared to Receive</h4>
+                <p>The Spirit is called a gift — not something earned by works, but something received by grace. <span class="context-link" data-term="the biblical definition and importance of repentance">Repentance</span> is the first step. The heart must turn away from sin and toward God. Baptism signifies cleansing and new life, publicly declaring one’s submission to God.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>In Ezekiel 36:26-27, God promised: “I will give you a new heart and put a new spirit within you.” The transformation of the heart precedes the infilling of the Spirit.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">2. The Holy Spirit Is Given Without Partiality</h4>
+                <p><span class="context-link" data-term="the story of Cornelius the Centurion in Acts 10">Cornelius</span>, a Roman centurion and a Gentile, was filled with the Spirit — showing God’s grace is not limited by race, nationality, or background. The only condition was a receptive, believing heart. We do not need to "qualify" by human standards. God searches for hearts open to Him: humble, obedient, hungry for truth.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">3. Obedience Is Essential for the Indwelling of the Spirit</h4>
+                <p>Obedience to God’s commands creates a welcoming environment for the Holy Spirit. Love for God is not just emotional — it’s demonstrated through daily choices.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Noah obeyed God even when it didn’t make sense (Genesis 6:22), and through his obedience, God’s Spirit worked powerfully to preserve life.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">4. Purity of Heart Attracts the Holy Spirit</h4>
+                <p>The Holy Spirit is holy — He does not dwell where sin is cherished. Not perfection, but sincerity — a real striving for righteousness. When we lie or harbor hypocrisy, we grieve the Spirit. Transparency before God allows His Spirit to fill us completely.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">5. A Lifestyle of Prayer Invites the Holy Spirit</h4>
+                <p>Before Pentecost, the disciples prayed together in unity. Prayer is not a ritual; it is opening your spirit to communion with God.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Daniel prayed faithfully three times a day (Daniel 6:10), and God’s Spirit revealed visions and dreams to him.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">6. We Must Remain Thirsty for More</h4>
+                <p>The Holy Spirit is freely given to those who ask persistently and sincerely. Hunger for God invites His Spirit.</p>
+                
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                    <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Conclusion: A Heart That Attracts the Spirit</h5>
+                    <p>Let us summarize the kind of life that welcomes the Holy Spirit: Repentant, Believing, Obedient, Pure, Prayerful, and Thirsty.</p>
+                    <blockquote class="mt-4">Today, ask yourself: Is my heart prepared? God is not far away. The Spirit is ready to fill any person whose heart is yielded, whose will is surrendered, whose spirit is humble. Open yourself to Him — and the Spirit will transform you from the inside out.</blockquote>
+                </div>
+                
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                     <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Key Scriptures for Meditation</h5>
+                    <ul class="list-disc list-inside">
+                        <li>Ezekiel 36:26-27</li>
+                        <li>Acts 2:37-39</li>
+                        <li>Acts 10:34-48</li>
+                        <li>John 14:15-17</li>
+                        <li>Isaiah 66:2</li>
+                        <li>Luke 11:13</li>
+                    </ul>
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-300 dark:border-gray-600 flex flex-col sm:flex-row gap-4">
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="reflect">✨ Reflect & Pray</button>
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="summarize">✨ Summarize Today's Message</button>
+                </div>
+            </section>
+
+            <section id="day-3" class="content-section space-y-4">
+                <h2 class="text-3xl mb-2" style="color: var(--text-heading);">Day 3: The Promise Fulfilled — Pentecost</h2>
+                <p class="text-sm mb-4" style="color: var(--text-subtle);">Main Text: Acts 2:1-13; Joel 2:28-29; Ezekiel 36:26-27</p>
+                <p class="text-sm italic p-2 rounded-lg" style="color: var(--text-subtle); background-color: rgba(0,0,0,0.05);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1 -mt-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                    Click on <span style="color: var(--link-color);" class="font-semibold">pink text</span> for deeper insights.
+                </p>
+                <h5 class="text-lg font-semibold mt-4" style="color: var(--text-heading);">Introduction</h5>
+                <p>The outpouring of the Holy Spirit at Pentecost is one of the most significant turning points in biblical history. It marked the moment when God moved from working through a select few to dwelling within all believers. This was the fulfillment of promises spoken through the prophets long before. Today, we will explore why Pentecost was not just a moment, but a new beginning for humanity.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">1. The Ancient Promise: A New Covenant of the Spirit</h4>
+                <p>The Old Testament is full of moments where the Spirit came upon individuals, but always temporarily and selectively. <span class="context-link" data-term="the prophet Joel's prophecy about the Spirit in Joel 2">Joel</span> prophesied of a coming day when the Spirit would be universally available. <span class="context-link" data-term="the prophet Ezekiel's prophecy of a new heart and spirit in Ezekiel 36">Ezekiel</span> promised not only external guidance but internal transformation with a new heart and spirit.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">2. The Timing of Pentecost: The Feast of Shavuot</h4>
+                <p><span class="context-link" data-term="The significance of Pentecost and its connection to the Feast of Shavuot">Pentecost</span> took place 50 days after Passover and commemorated the giving of the Law on Mount Sinai. The contrast is powerful: At Sinai, 3,000 died due to rebellion. At Pentecost, 3,000 were saved by receiving the Spirit. The letter kills, but the Spirit gives life.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">3. The Manifestation of Power</h4>
+                <p>A violent wind, tongues of fire, and speaking in tongues marked the Spirit's arrival. The speaking in other tongues demonstrated the Spirit’s supernatural ability to cross language barriers — reversing the curse of <span class="context-link" data-term="The curse of the Tower of Babel in Genesis 11">Babel</span>.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">4. The Immediate Impact</h4>
+                <p>Jews from across the Roman world heard the Gospel in their native languages. The Spirit made the message accessible to everyone, foreshadowing the global mission of the church. God always intended to bless “all nations” through Abraham (Genesis 12:3). Pentecost was the beginning of that global outreach.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">5. Peter’s Interpretation</h4>
+                <p>Peter explains that what they are seeing is not drunkenness but prophecy fulfilled. The Spirit empowers prophecy, visions, dreams — supernatural communication from God to humanity. The outpouring of the Spirit was not a reward for righteousness, but the inauguration of a new era: the New Covenant.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">6. The Spirit Changes Ordinary People Into Extraordinary Witnesses</h4>
+                <p>Peter, who once denied Jesus in fear, now preaches boldly. The Holy Spirit transforms the weak into powerful witnesses.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">7. The Spirit Is Still Available Today</h4>
+                <p>Pentecost was not a one-time event. It is a model for what God wants to do in every generation. The same Spirit that filled the 120 in the upper room is available to us.</p>
+                
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                    <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Conclusion: The Promise Continues</h5>
+                    <p>At Pentecost, God demonstrated that His presence is no longer limited to temples, altars, or select prophets. The new temple is the believer’s heart (1 Corinthians 6:19). The Spirit is our Empowerment, Guide, Teacher, and Comforter.</p>
+                    <blockquote class="mt-4">The Holy Spirit has not changed. The question is: Are you ready to be His dwelling place? Today, you can receive the same outpouring — with open repentance, faith, and complete surrender.</blockquote>
+                </div>
+                
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                    <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Key Scriptures for Meditation</h5>
+                    <ul class="list-disc list-inside">
+                        <li>Joel 2:28-29</li>
+                        <li>Ezekiel 36:26-27</li>
+                        <li>Jeremiah 31:31-33</li>
+                        <li>Acts 2:1-41</li>
+                        <li>John 14:15-17</li>
+                        <li>2 Corinthians 3:6</li>
+                    </ul>
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-300 dark:border-gray-600 flex flex-col sm:flex-row gap-4">
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="reflect">✨ Reflect & Pray</button>
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="summarize">✨ Summarize Today's Message</button>
+                </div>
+            </section>
+
+            <section id="day-4" class="content-section space-y-4">
+                <h2 class="text-3xl mb-2" style="color: var(--text-heading);">Day 4: Walking Daily with the Holy Spirit</h2>
+                <p class="text-sm mb-4" style="color: var(--text-subtle);">Main Text: Acts 13:1-4; John 14:16-17; Romans 8:14-16</p>
+                <p class="text-sm italic p-2 rounded-lg" style="color: var(--text-subtle); background-color: rgba(0,0,0,0.05);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1 -mt-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                    Click on <span style="color: var(--link-color);" class="font-semibold">pink text</span> for deeper insights.
+                </p>
+                <h5 class="text-lg font-semibold mt-4" style="color: var(--text-heading);">Introduction</h5>
+                <p>The Holy Spirit is not simply an experience or event — He is a Person. After the initial outpouring, the work of the Spirit continues daily. The Spirit is not only the power that performs miracles, but the daily presence that leads, teaches, convicts, comforts, warns, protects, and speaks. Today we will explore how to live daily in friendship with the Holy Spirit — where His voice becomes your most trusted counsel.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">1. The Holy Spirit as Guide: Direction for Life</h4>
+                <p>The early church made major decisions based on the Spirit’s direct leading. The Holy Spirit speaks through prayer, fasting, and spiritual discernment. We must make space to hear His voice through worship, stillness, and obedience.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Like how the Spirit led Samuel to anoint David as king (1 Samuel 16:1-13) — not by human reasoning but divine instruction.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">2. The Holy Spirit as Teacher: Revealing Truth</h4>
+                <p>The Spirit clarifies Scripture, convicts the heart, and exposes error. In a world full of deception, the Spirit keeps the believer grounded in truth.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>Similar to how God gave wisdom to Solomon, granting him divine understanding (1 Kings 3:9-12).</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">3. The Holy Spirit as Comforter: Your Constant Companion</h4>
+                <p>The word <span class="context-link" data-term="the meaning of Parakletos (Advocate or Comforter) in John 14">Advocate (Paraklētos)</span> means helper, counselor, comforter. In times of sorrow, uncertainty, or fear, the Spirit brings supernatural peace. His presence is permanent — “to be with you forever.”</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>God comforted Hagar in the desert (Genesis 21:17-19) — even when she thought she was forgotten, His Spirit saw her.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">4. The Holy Spirit as Protector: Preventing Disaster</h4>
+                <p>The Spirit not only opens doors but closes doors to protect and redirect. Sometimes God’s “no” is the greatest protection we can receive. Learning to recognize the Spirit’s warnings can save you from relationships, business decisions, or paths that lead to harm.</p>
+                
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">5. The Holy Spirit as Power: Strength to Overcome Weakness</h4>
+                <p>The Spirit empowers us when we are too weak to stand. He even intercedes for us in prayer with <span class="context-link" data-term="The meaning of 'groanings too deep for words' in Romans 8:26">groanings too deep for words</span>.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>When Moses said, “I cannot speak,” God gave him divine help (Exodus 4:10-12).</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">6. The Holy Spirit as Witness: Assurance of Sonship</h4>
+                <p>The Spirit removes doubt about our identity. The Spirit himself bears witness with our spirit that we are children of God. You are no longer a slave to fear but a beloved child of God.</p>
+                <h5 class="text-lg font-semibold mt-2" style="color: var(--text-heading);">Old Testament Echo:</h5>
+                <p>God called Israel His firstborn (Exodus 4:22); now, by the Spirit, every believer receives that assurance personally.</p>
+
+                <h4 class="text-xl pt-4" style="color: var(--text-heading);">7. The Spirit Wants Relationship, Not Ritual</h4>
+                <p>The Holy Spirit is not limited to church services, emotional highs, or spiritual events. He desires to walk with you through everyday life: in your workplace, in your family decisions, in your private thoughts, and in your future planning. The more you yield, the more you hear. The more you listen, the more you trust. The more you trust, the more you obey. And the more you obey, the more you walk in daily partnership with the Spirit.</p>
+                
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                     <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Conclusion: Make the Spirit Your Closest Friend</h5>
+                     <p>The Holy Spirit is not far away. He speaks. He guides. He comforts. He protects. He empowers. He transforms.</p>
+                    <blockquote class="mt-4">If you will make the Holy Spirit your best friend, your entire life will take on supernatural guidance. He sees what you cannot see. He knows what you cannot know. He prepares what you could never prepare. But He requires your total surrender, your complete trust, and your deep hunger for God. Start your day with Him. Invite Him into every decision. Acknowledge His presence at every step. And you will walk in the unbreakable, unstoppable companionship of the Spirit of God.</blockquote>
+                </div>
+
+                <div class="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
+                    <h5 class="text-lg font-semibold" style="color: var(--text-heading);">Key Scriptures for Meditation</h5>
+                    <ul class="list-disc list-inside">
+                        <li>Acts 13:1-4</li>
+                        <li>Acts 16:6-10</li>
+                        <li>John 14:16-17</li>
+                        <li>John 16:13</li>
+                        <li>Romans 8:14-16</li>
+                        <li>Romans 8:26</li>
+                        <li>Philippians 4:7</li>
+                    </ul>
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-300 dark:border-gray-600 flex flex-col sm:flex-row gap-4">
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="reflect">✨ Reflect & Pray</button>
+                    <button class="gemini-btn font-semibold py-2 px-4 rounded-lg shadow-md w-full sm:w-auto flex-1 gemini-action" data-action="summarize">✨ Summarize Today's Message</button>
+                </div>
+            </section>
         </main>
-
-        <section class="mt-12 mb-12 bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
-            <p class="text-center text-xl text-purple-700 font-semibold mb-6">
-                <span class="text-3xl mr-2">📖</span> “Draw near to God, and he will draw near to you.” <span class="font-normal text-gray-500">(James 4:8, ESV)</span>
-            </p>
-            <h3 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center">
-                <span class="text-3xl mr-3">🔍</span> Dive Deeper Challenge:
-            </h3>
-            <p class="text-gray-700 mb-4">
-                Study each character’s full story. How did their lives change after their divine encounter? What patterns do you see?
-            </p>
-            <h3 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center">
-                <span class="text-3xl mr-3">🙏</span> Group Prayer:
-            </h3>
-            <p class="text-gray-700 italic">
-                “God of Abraham, Moses, Mary, and Paul—thank You for meeting ordinary people in extraordinary ways. Draw us closer. Change us deeply. Use us mightily.”
-            </p>
-        </section>
-
-        <section class="mb-12 bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
-            <h2 class="text-2xl md:text-3xl font-bold text-purple-700 mb-4">
-                Conclusion: What Happens When God Shows Up?
-            </h2>
-            <p class="text-gray-700 mb-4">
-                God doesn’t just “visit” people—He commissions them, changes them, affirms them, and gives them a future. These twelve stories stretch across centuries, from patriarchs to prophets, kings to commoners, showing that divine encounters are never random—they are invitations into transformation.
-            </p>
-        </section>
-
     </div>
 
-    <!-- The Modal Overlay and Content -->
-    <div id="modal-overlay" class="modal-overlay">
-        <div id="modal-content" class="modal-content">
-            <button class="close-button" onclick="closeModal()">&times;</button>
-            <h3 id="modal-title"></h3>
-            <div id="modal-body"></div>
-            <div id="llm-response-area" class="mt-8 pt-8 border-t border-gray-200 hidden">
-                <h4 class="text-xl font-bold text-purple-700 mb-4" id="llm-response-title"></h4>
-                <p id="llm-response-content" class="text-gray-700"></p>
-                <p id="loading-indicator" class="text-center text-purple-500 italic mt-4 hidden">
-                    Generating<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>
-                </p>
+    <!-- Modal for Gemini Content -->
+    <div id="context-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center p-4 z-50 hidden">
+        <div class="modal-content w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl shadow-2xl" style="background-color: var(--modal-bg);">
+            <div class="sticky top-0 p-4 border-b flex justify-between items-center" style="background-color: var(--modal-header-bg); border-color: var(--active-card-border);">
+                <h3 id="modal-title" class="text-xl" style="color: var(--text-heading);">Deeper Insight</h3>
+                <button id="close-modal" class="text-2xl font-bold transition-colors" style="color: var(--text-subtle);">&times;</button>
+            </div>
+            <div id="modal-body" class="p-6">
+                <div class="loading-spinner-container">
+                    <div class="loading-spinner"></div>
+                </div>
+                <div id="modal-text" class="space-y-4 prose dark:prose-invert" style="color: var(--text-primary);"></div>
             </div>
         </div>
     </div>
 
+
     <script>
-        const encountersData = {
-            moses: {
-                title: 'Moses at the Burning Bush',
-                bibleRef: 'Exodus 3:1–12',
-                emoji: '✨',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> In ancient Midian, Moses lived as a shepherd, a dramatic fall from Egyptian royalty. Deserts were seen as thin places between heaven and earth. The burning bush (“seneh” in Hebrew) was a theophany, a visible manifestation of Yahweh.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse (NRSV):</strong> "I will be with you; and this shall be the sign for you that it is I who sent you..." (Exod. 3:12)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> God’s presence, not Moses’ qualifications, would empower the mission (cf. 2 Cor. 12:9). The Hebrew phrase "ehyeh imak" (אֶהְיֵה עִםָּךּ) means "I will be with you" and echoes throughout Scripture (cf. Matt. 28:20).</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God calls ordinary people in obscure places to do extraordinary things.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</strong> If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>What “desert” season are you in now?</li>
-                        <li>Are you willing to turn aside when God calls your name?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</b> Lord, speak into my wilderness. I am listening.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Moses’s life after his encounter?</strong> This encounter shifted him from exile to national leader. Later, he would speak face to face with God (Exodus 33:11), lead miracles (Exodus 14), and receive the Law (Exodus 20).</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> In ancient Midian, Moses lived as a shepherd—a far cry from his Egyptian royal upbringing. Deserts were seen as thin places between heaven and earth. The burning bush (“seneh” in Hebrew) was a theophany, a visible manifestation of Yahweh.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</b> If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Moses at the Burning Bush – Exodus 3:1–12
-
-                    Historical Context: In ancient Midian, Moses lived as a shepherd, a dramatic fall from Egyptian royalty. Deserts were seen as thin places between heaven and earth. The burning bush (“seneh” in Hebrew) was a theophany, a visible manifestation of Yahweh. This encounter shifted him from exile to national leader. Later, he would speak face to face with God (Exodus 33:11), lead miracles (Exodus 14), and receive the Law (Exodus 20).
-                    Key Verse: "I will be with you; and this shall be the sign for you that it is I who sent you..." (Exod. 3:12)
-                    Commentary: God’s presence, not Moses’ qualifications, would empower the mission (cf. 2 Cor. 12:9). The Hebrew phrase "ehyeh imak" (אֶהְיֵה עִםָּךּ) means "I will be with you" and echoes throughout Scripture (cf. Matt. 28:20).
-                    Inspiration: God calls ordinary people in obscure places to do extraordinary things.
-                    Life Application: If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.
-                    What changed in Moses’s life after his encounter? This encounter shifted him from exile to national leader. Later, he would speak face to face with God (Exodus 33:11), lead miracles (Exodus 14), and receive the Law (Exodus 20).
-                    How did the cultural context enhance the encounter? In ancient Midian, Moses lived as a shepherd—a far cry from his Egyptian royal upbringing. Deserts were seen as thin places between heaven and earth.
-                    How might this apply to our lives today? If you feel forgotten or disqualified by your past, God still sees a mission for you. Intimacy with Him reveals a purpose greater than fear.
-                `
-            },
-            solomon: {
-                title: 'Solomon’s Dream at Gibeon',
-                bibleRef: '1 Kings 3:3–15',
-                emoji: '👑',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication (cf. Gen. 20:3; Matt. 1:20).</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Ask what I should give you." (1 Kings 3:5)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</strong> Solomon's choice of wisdom (חִכְמָה, chokhmah) over riches reflects Deuteronomy 17:18–20, where a king is called to meditate on God's law.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> When you seek God’s wisdom over personal gain, divine favor follows.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</strong> God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>What are you asking God for most often?</li>
-                        <li>How would your choices change if wisdom were your highest goal?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Lord, give me a heart that treasures wisdom above wealth.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Solomon’s life after his encounter?</strong> He chose wisdom, and as a result, gained wealth and peace. His reign saw unprecedented prosperity (1 Kings 4:20–34). His encounter led to the construction of the temple (1 Kings 6) and worldwide fame (1 Kings 10).</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Solomon’s Dream at Gibeon – 1 Kings 3:3–15
-
-                    Historical Context: Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication (cf. Gen. 20:3; Matt. 1:20).
-                    Key Verse: "Ask what I should give you." (1 Kings 3:5)
-                    Commentary: Solomon's choice of wisdom (חִכְמָה, chokhmah) over riches reflects Deuteronomy 17:18–20, where a king is called to meditate on God's law.
-                    Inspiration: When you seek God’s wisdom over personal gain, divine favor follows.
-                    Life Application: God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.
-                    What changed in Solomon’s life after his encounter? He chose wisdom, and as a result, gained wealth and peace. His reign saw unprecedented prosperity (1 Kings 4:20–34). His encounter led to the construction of the temple (1 Kings 6) and worldwide fame (1 Kings 10).
-                    How did the cultural context enhance the encounter? Gibeon was a key high place before the temple existed. Solomon's vision comes in a dream, a recognized mode of divine communication.
-                    How might this apply to our lives today? God still gives wisdom generously (James 1:5). Seek His heart first, and He will shape yours.
-                `
-            },
-            david: {
-                title: 'David\'s Anointing',
-                bibleRef: '1 Samuel 16:1–13',
-                emoji: '🎯',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Anointing with oil (Hebrew: *mashach*) was a sacred act to set someone apart for God’s purposes. David, the youngest, was overlooked even by his father.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</b> "For the Lord does not see as mortals see... the Lord looks on the heart." (1 Sam. 16:7)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> God delights in hidden humility. This is echoed in 1 Cor. 1:27–28 — "God chose the foolish things... to shame the wise."</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God sees potential in us when others see insignificance.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Are you overlooked or underestimated? Your heart of faith is more important than credentials.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>How do you handle seasons when you’re unseen?</li>
-                        <li>Where might God be calling out your hidden potential?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Father, shape my heart to reflect Yours. Choose me for Your glory.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in David’s life after his encounter?</strong> This encounter began his rise to kingship (2 Samuel 5), victory over Goliath (1 Sam. 17), and a covenantal legacy (2 Sam. 7). He became Israel's greatest king and the standard of messianic hope.</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Anointing marked divine selection. Though young and overlooked, David was chosen.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Are you overlooked or underestimated? Your heart of faith is more important than credentials.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: David's Anointing – 1 Samuel 16:1–13
-
-                    Historical Context: Anointing with oil (Hebrew: *mashach*) was a sacred act to set someone apart for God’s purposes. David, the youngest, was overlooked even by his father. This encounter began his rise to kingship (2 Samuel 5), victory over Goliath (1 Sam. 17), and a covenantal legacy (2 Sam. 7). He became Israel's greatest king and the standard of messianic hope.
-                    Key Verse: "For the Lord does not see as mortals see... the Lord looks on the heart." (1 Sam. 16:7)
-                    Commentary: God delights in hidden humility. This is echoed in 1 Cor. 1:27–28 — "God chose the foolish things... to shame the wise."
-                    Inspiration: God sees potential in us when others see insignificance.
-                    Life Application: Are you overlooked or underestimated? Your heart of faith is more important than credentials.
-                    What changed in David’s life after his encounter? This encounter began his rise to kingship (2 Samuel 5), victory over Goliath (1 Sam. 17), and a covenantal legacy (2 Sam. 7). He became Israel's greatest king and the standard of messianic hope.
-                    How did the cultural context enhance the encounter? Anointing marked divine selection. Though young and overlooked, David was chosen.
-                    How might this apply to our lives today? Are you overlooked or underestimated? Your heart of faith is more important than credentials.
-                `
-            },
-            saul: {
-                title: 'Saul on the Road to Damascus',
-                bibleRef: 'Acts 9:1–19',
-                emoji: '⚡️',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</b> Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Saul, Saul, why do you persecute me?" (Acts 9:4)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The voice identifies with the Church, showing the body of Christ is united with the Head (cf. 1 Cor. 12:12). The transformation of Saul to Paul exemplifies justification by grace (Rom. 5:1).</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> Even the most misguided soul can be radically redirected by grace.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>Is there someone you think God can’t redeem?</li>
-                        <li>What blind spots might He be trying to remove in you?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Jesus, open my eyes to Your truth and redirect my life.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Saul’s life after his encounter?</strong> After healing (Acts 9:18) and baptism, he became Paul the apostle. He traveled widely, authored letters, and planted churches. His encounter redirected Jewish zeal into gospel mission (Acts 13–28).</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Saul on the Road to Damascus – Acts 9:1–19
-
-                    Historical Context: Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians. After healing (Acts 9:18) and baptism, he became Paul the apostle. He traveled widely, authored letters, and planted churches. His encounter redirected Jewish zeal into gospel mission (Acts 13–28).
-                    Key Verse: "Saul, Saul, why do you persecute me?" (Acts 9:4)
-                    Commentary: The voice identifies with the Church, showing the body of Christ is united with the Head (cf. 1 Cor. 12:12). The transformation of Saul to Paul exemplifies justification by grace (Rom. 5:1).
-                    Inspiration: Even the most misguided soul can be radically redirected by grace.
-                    Life Application: No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.
-                    What changed in Saul’s life after his encounter? After healing (Acts 9:18) and baptism, he became Paul the apostle. He traveled widely, authored letters, and planted churches. His encounter redirected Jewish zeal into gospel mission (Acts 13–28).
-                    How did the cultural context enhance the encounter? Saul was a zealous Pharisee, possibly a member of the Sanhedrin, trained under Gamaliel. Damascus was a hub of diaspora Jews and early Christians.
-                    How might this apply to our lives today? No one is too far gone. Knowing Christ personally changes everything—identity, mission, and future.
-                `
-            },
-            peter: {
-                title: 'Peter’s Call by the Sea',
-                bibleRef: 'Luke 5:1–11',
-                emoji: '🛶',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Do not be afraid; from now on you will be catching people." (Luke 5:10)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The Greek word for “catching” (ζωγρέω, *zōgreō*) implies rescue to life—a redemptive mission.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God meets you where you are and gives your life a new mission.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> When Jesus steps into your boat (life), He redefines your career and calling.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>What part of your daily life could God be calling from?</li>
-                        <li>Are you willing to leave your nets behind?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Jesus, call me into deeper purpose—whatever it takes.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Peter’s life after his encounter?</strong> He became a leading apostle (Acts 2), walked on water (Matt. 14:29), and healed the sick (Acts 3:6). His life moved from boats to bold preaching in Jerusalem and Rome.</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> When Jesus steps into your boat (life), He redefines your career and calling.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Peter’s Call by the Sea – Luke 5:1–11
-
-                    Historical Context: Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch. He became a leading apostle (Acts 2), walked on water (Matt. 14:29), and healed the sick (Acts 3:6). His life moved from boats to bold preaching in Jerusalem and Rome.
-                    Key Verse: "Do not be afraid; from now on you will be catching people." (Luke 5:10)
-                    Commentary: The Greek word for “catching” (ζωγρέω, *zōgreō*) implies rescue to life—a redemptive mission.
-                    Inspiration: God meets you where you are and gives your life a new mission.
-                    Life Application: When Jesus steps into your boat (life), He redefines your career and calling.
-                    What changed in Peter’s life after his encounter? He became a leading apostle (Acts 2), walked on water (Matt. 14:29), and healed the sick (Acts 3:6). His life moved from boats to bold preaching in Jerusalem and Rome.
-                    How did the cultural context enhance the encounter? Fishermen worked long, fruitless hours. Jesus interrupts the mundane with a miraculous catch.
-                    How might this apply to our lives today? When Jesus steps into your boat (life), He redefines your career and calling.
-                `
-            },
-            isaiah: {
-                title: 'Isaiah’s Vision',
-                bibleRef: 'Isaiah 6:1–8',
-                emoji: '🔥',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> "Here am I; send me!" (Isa. 6:8)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> Isaiah's unclean lips (שְׂפָתַיִם טְמֵאִים, *sefatayim teme'im*) are cleansed by fire—a symbol of both judgment and purification. Divine calling follows repentance and cleansing.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> Even when we feel unworthy, God’s holiness can cleanse and call us.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Intimacy with God doesn't ignore our sin—it transforms us for mission.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>What in you still needs God’s purifying fire?</li>
-                        <li>Have you answered His call—or just admired the vision?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Holy God, cleanse me. Then send me.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Isaiah’s life after his encounter?</strong> This encounter launched a lifelong prophetic ministry. His messages of hope and judgment shaped Israelite theology. He prophesied the coming of the Messiah (Isaiah 9, 53).</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Intimacy with God doesn't ignore our sin—it transforms us for mission.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Isaiah’s Vision – Isaiah 6:1–8
-
-                    Historical Context: In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning. This encounter launched a lifelong prophetic ministry. His messages of hope and judgment shaped Israelite theology. He prophesied the coming of the Messiah (Isaiah 9, 53).
-                    Key Verse: "Here am I; send me!" (Isa. 6:8)
-                    Commentary: Isaiah's unclean lips (שְׂפָתַיִם טְמֵאִים, *sefatayim teme'im*) are cleansed by fire—a symbol of both judgment and purification. Divine calling follows repentance and cleansing.
-                    Inspiration: Even when we feel unworthy, God’s holiness can cleanse and call us.
-                    Life Application: Intimacy with God doesn't ignore our sin—it transforms us for mission.
-                    What changed in Isaiah’s life after his encounter? This encounter launched a lifelong prophetic ministry. His messages of hope and judgment shaped Israelite theology. He prophesied the coming of the Messiah (Isaiah 9, 53).
-                    How did the cultural context enhance the encounter? In the year King Uzziah died (742 BC), national uncertainty loomed. Temple visions were known forms of prophetic commissioning.
-                    How might this apply to our lives today? Intimacy with God doesn't ignore our sin—it transforms us for mission.
-                `
-            },
-            jacob: {
-                title: 'Jacob at Bethel',
-                bibleRef: 'Genesis 28:10–22',
-                emoji: '🏕️',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</b> "Surely the Lord is in this place—and I did not know it!" (Gen. 28:16)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The ladder (סֻלָּם, *sullam*) symbolizes connection between heaven and earth. Jesus echoes this in John 1:51.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God is present even when we feel alone, on the run, or undeserving.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> God finds us in exile and invites us into covenant identity.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>Where have you sensed God’s presence unexpectedly?</li>
-                        <li>Are you running from something instead of toward Him?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Father, reveal Your presence in the places I least expect.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Jacob’s life after his encounter?</strong> Afterward, he vowed loyalty to God. He returned wealthier (Gen. 32), wrestled with God (Gen. 32:28), and became Israel, the father of a nation. His divine encounter turned a fugitive into a patriarch.</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</b> God finds us in exile and invites us into covenant identity.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Jacob at Bethel – Genesis 28:10–22
-
-                    Historical Context: Fleeing for his life, Jacob saw heaven open. Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship. Afterward, he vowed loyalty to God. He returned wealthier (Gen. 32), wrestled with God (Gen. 32:28), and became Israel, the father of a nation. His divine encounter turned a fugitive into a patriarch.
-                    Key Verse: "Surely the Lord is in this place—and I did not know it!" (Gen. 28:16)
-                    Commentary: The ladder (סֻלָּם, *sullam*) symbolizes connection between heaven and earth. Jesus echoes this in John 1:51.
-                    Inspiration: God is present even when we feel alone, on the run, or undeserving.
-                    Life Application: God finds us in exile and invites us into covenant identity.
-                    What changed in Jacob’s life after his encounter? Afterward, he vowed loyalty to God. He returned wealthier (Gen. 32), wrestled with God (Gen. 32:28), and became Israel, the father of a nation. His divine encounter turned a fugitive into a patriarch.
-                    How did the cultural context enhance the encounter? Dreams in the ANE were considered sacred channels for divine communication. Bethel (“House of God”) became a significant site of worship.
-                    How might this apply to our lives today? God finds us in exile and invites us into covenant identity.
-                `
-            },
-            jesus: {
-                title: 'Jesus’ Baptism',
-                bibleRef: 'Matthew 3:13–17',
-                emoji: '🕊️',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “This is my Son, the Beloved, with whom I am well pleased.” (Matt. 3:17)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> This moment echoes Psalm 2:7 and Isaiah 42:1—kingly and servant imagery. The voice from heaven affirms identity before Jesus begins ministry.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God affirms identity before performance.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Your obedience, not your perfection, pleases God.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>In what areas are you stepping into obedience?</li>
-                        <li>Where do you need God's affirmation of who you are?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Father, remind me that I am Your beloved, even before I serve.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Jesus’s life after his encounter?</strong> Afterward, He began His ministry (Matt. 4:17), healed multitudes, and taught with authority. This encounter publicly marked Him as the Son of God.</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Your obedience, not your perfection, pleases God.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Jesus’ Baptism – Matthew 3:13–17
-
-                    Historical Context: Though sinless, Jesus submitted to baptism. Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners. The Spirit descended and affirmed His identity. Afterward, He began His ministry (Matt. 4:17), healed multitudes, and taught with authority. This encounter publicly marked Him as the Son of God.
-                    Key Verse: “This is my Son, the Beloved...” (Matt. 3:17)
-                    Commentary: This moment echoes Psalm 2:7 and Isaiah 42:1—kingly and servant imagery. The voice from heaven affirms identity before Jesus begins ministry.
-                    Inspiration: God affirms identity before performance.
-                    Life Application: Your obedience, not your perfection, pleases God.
-                    What changed in Jesus’s life after his encounter? Afterward, He began His ministry (Matt. 4:17), healed multitudes, and taught with authority. This encounter publicly marked Him as the Son of God.
-                    How did the cultural context enhance the encounter? Baptism by John was a public act of repentance in preparation for the Messiah. Jesus' choice to be baptized, though sinless, demonstrated humility and identification with sinners.
-                    How might this apply to our lives today? Your obedience, not your perfection, pleases God.
-                `
-            },
-            mary: {
-                title: 'Mary\'s Encounter with Gabriel',
-                bibleRef: 'Luke 1:26–38',
-                emoji: '🌅',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “Let it be with me according to your word.” (Luke 1:38)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> Mary's submission echoes themes of faith from Abraham and Hannah. Her yes made space for the incarnation.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God works through surrendered lives, not strategic plans.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Your yes, even in uncertainty, can birth divine things.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>What call from God are you hesitant to accept?</li>
-                        <li>How can you practice faith before understanding?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Lord, let it be to me according to Your word.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Mary’s life after his encounter?</strong> Her yes brought the incarnation. Afterward, she witnessed miracles, gave birth to the Messiah, and became a revered figure in Christianity.</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Your yes, even in uncertainty, can birth divine things.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Mary's Encounter with Gabriel – Luke 1:26–38
-
-                    Historical Context: A young girl in Nazareth received history’s most profound message. Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance. Her yes brought the incarnation. Afterward, she witnessed miracles, gave birth to the Messiah, and became a revered figure in Christianity.
-                    Key Verse: 'Let it be with me according to your word.' (Luke 1:38)
-                    Commentary: Mary's submission echoes themes of faith from Abraham and Hannah. Her yes made space for the incarnation.
-                    Inspiration: Faith means saying 'yes' even when you don’t have all the answers. God works through surrendered lives, not strategic plans.
-                    Life Application: Your yes, even in uncertainty, can birth divine things.
-                    What changed in Mary’s life after his encounter? Her yes brought the incarnation. Afterward, she witnessed miracles, gave birth to the Messiah, and became a revered figure in Christianity.
-                    How did the cultural context enhance the encounter? Angelic visitations often accompanied divine mission announcements. Mary, a young girl in a forgotten town, is given cosmic significance.
-                    How might this apply to our lives today? Your yes, even in uncertainty, can birth divine things.
-                `
-            },
-            abraham: {
-                title: 'Abraham Under the Stars',
-                bibleRef: 'Genesis 15:1–6',
-                emoji: '🌕',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “And he believed the Lord; and the Lord reckoned it to him as righteousness.” (Gen. 15:6)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> This act of trust becomes the foundation for Paul’s theology of justification by faith (Rom. 4; Gal. 3).</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</b> Faith is the door to legacy.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> God's promises are more real than your current reality.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>What promise feels hard to believe right now?</li>
-                        <li>How can you practice trust while you wait?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> God of the stars, I choose to believe even when I don’t see.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Abraham’s life after his encounter?</strong> Later, Isaac was born (Gen. 21), and Abraham became the father of nations (Gen. 17:4–5).</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> God's promises are more real than your current reality.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Abraham Under the Stars – Genesis 15:1–6
-
-                    Historical Context: God appeared to childless Abraham and promised descendants. Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace. That night changed everything. Later, Isaac was born (Gen. 21), and Abraham became the father of nations (Gen. 17:4–5).
-                    Key Verse: “And he believed the Lord; and the Lord reckoned it to him as righteousness.” (Gen. 15:6)
-                    Commentary: This act of trust becomes the foundation for Paul’s theology of justification by faith (Rom. 4; Gal. 3).
-                    Inspiration: Trusting God’s promises unlocks legacy beyond imagination. Faith is the door to legacy.
-                    Life Application: God's promises are more real than your current reality.
-                    What changed in Abraham’s life after his encounter? Later, Isaac was born (Gen. 21), and Abraham became the father of nations (Gen. 17:4–5).
-                    How did the cultural context enhance the encounter? Ancient covenant rituals often included splitting animals, symbolizing the binding nature of the agreement. God passes through alone, signifying unilateral grace.
-                    How might this apply to our lives today? God's promises are more real than your current reality.
-                `
-            },
-            samuel: {
-                title: 'Samuel Hears God’s Voice',
-                bibleRef: '1 Samuel 3:1–21',
-                emoji: '🛐',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “Speak, Lord, for your servant is listening.” (1 Sam. 3:10)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> God speaks to the available, not just the mature. Intimacy begins with listening.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</b> God calls by name, not by résumé.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Making space to hear God is the beginning of all wisdom.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>What distractions keep you from hearing God’s voice?</li>
-                        <li>Are you positioned in humility to listen?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Speak, Lord. I’m listening with an open heart.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Samuel’s life after his encounter?</strong> He became the last judge and first major prophet (1 Sam. 7). His life was marked by obedience, justice, and spiritual leadership.</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Making space to hear God is the beginning of all wisdom.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Samuel Hears God’s Voice – 1 Samuel 3:1–21
-
-                    Historical Context: A boy in the temple heard the divine call. At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned. He became the last judge and first major prophet (1 Sam. 7). His life was marked by obedience, justice, and spiritual leadership.
-                    Key Verse: “Speak, Lord, for your servant is listening.” (1 Sam. 3:10)
-                    Commentary: God speaks to the available, not just the mature. Intimacy begins with listening.
-                    Inspiration: God speaks to those who listen—even the young. God calls by name, not by résumé.
-                    Life Application: Making space to hear God is the beginning of all wisdom.
-                    What changed in Samuel’s life after his encounter? He became the last judge and first major prophet (1 Sam. 7). His life was marked by obedience, justice, and spiritual leadership.
-                    How did the cultural context enhance the encounter? At a time when God’s word was rare, Samuel’s call signaled a shift. The tabernacle at Shiloh was losing prominence, but God's voice returned.
-                    How might this apply to our lives today? Making space to hear God is the beginning of all wisdom.
-                `
-            },
-            elijah: {
-                title: 'Elijah on Mount Horeb',
-                bibleRef: '1 Kings 19:9–18',
-                emoji: '🗻',
-                mainContentHTML: `
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📜 Historical Context:</strong> Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter.</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">📖 Key Verse:</strong> “…a sound of sheer silence.” (1 Kings 19:12)</p>
-                    <p class="text-gray-600 mb-2"><strong class="text-purple-600">🔍 Commentary:</b> The Hebrew phrase דְּמָמָה דַקָּה (*demamah daqqah*) suggests “a delicate whisper.” God met Elijah not in spectacle, but in stillness.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🕊 Inspiration:</strong> God is near in the quiet.</p>
-                    <p class="text-gray-600 mb-4"><strong class="text-purple-600">🔞 Life Application:</b> Don’t miss God’s voice by only expecting fireworks.</p>
-                    <h4 class="text-lg font-semibold text-indigo-600 mb-2">🪞 Reflection Questions:</h4>
-                    <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>Where do you need to make space for silence?</li>
-                        <li>How has God spoken gently in your past?</li>
-                    </ul>
-                    <p class="text-gray-600 mb-6"><strong class="text-purple-600">🙏 Prayer Prompt:</strong> Lord, help me hear You in the stillness.</p>
-                `,
-                modalContextHTML: `
-                    <p><strong class="text-purple-600">What changed in Elijah’s life after his encounter?</strong> Elijah was restored and commissioned anew (1 Kings 19:15). He later passed the mantle to Elisha (2 Kings 2).</p>
-                    <p><strong class="text-purple-600">How did the cultural context enhance the encounter?</strong> Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter.</p>
-                    <p><strong class="text-purple-600">How might this apply to our lives today?</strong> Don’t miss God’s voice by only expecting fireworks.</p>
-                `,
-                llmPromptContext: `
-                    Divine Encounter: Elijah on Mount Horeb – 1 Kings 19:9–18
-
-                    Historical Context: After great miracles, Elijah was burned out. Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter. God revealed Himself not in fire, but silence. Elijah was restored and commissioned anew (1 Kings 19:15). He later passed the mantle to Elisha (2 Kings 2).
-                    Key Verse: “…a sound of sheer silence.” (1 Kings 19:12)
-                    Commentary: The Hebrew phrase דְּמָמָה דַקָּה (*demamah daqqah*) suggests “a delicate whisper.” God met Elijah not in spectacle, but in stillness.
-                    Inspiration: God is near in the quiet. God often meets us in quiet moments, not just dramatic ones.
-                    Life Application: Don’t miss God’s voice by only expecting fireworks.
-                    What changed in Elijah’s life after his encounter? Elijah was restored and commissioned anew (1 Kings 19:15). He later passed the mantle to Elisha (2 Kings 2).
-                    How did the cultural context enhance the encounter? Elijah, discouraged after victory, fled to Horeb (Sinai). He expected fire—but met silence. God redefined divine encounter.
-                    How might this apply to our lives today? Don’t miss God’s voice by only expecting fireworks.
-                `
-            }
-        };
-
-        // Store user selections
-        const userSelections = {};
-
-        // Function to dynamically load encounters
-        function loadEncounters() {
-            const mainContainer = document.querySelector('main');
-            for (const key in encountersData) {
-                const encounter = encountersData[key];
-                const detailsElement = document.createElement('details');
-                detailsElement.classList.add('bg-white', 'p-0', 'rounded-2xl', 'shadow-lg', 'hover:shadow-xl', 'transition-shadow', 'duration-300', 'border', 'border-indigo-200');
-
-                detailsElement.innerHTML = `
-                    <summary class="cursor-pointer py-4 px-6 text-2xl font-bold text-indigo-700 flex items-center justify-between">
-                        <div class="flex items-center gap-4 flex-1">
-                            <span>${encounter.emoji} ${encounter.title} – <span class="font-normal text-purple-500 ml-2">${encounter.bibleRef}</span></span>
-                            <div class="flex items-center gap-2 ml-auto">
-                                <input type="text"
-                                    class="border-2 border-indigo-200 rounded px-3 py-1 text-base font-normal"
-                                    placeholder="Your name..."
-                                    data-input-${key}
-                                >
-                                <label class="inline-flex items-center cursor-pointer">
-                                    <input type="checkbox"
-                                        class="form-checkbox text-indigo-600 rounded"
-                                        data-checkbox-${key}
-                                    >
-                                    <span class="ml-2 text-base font-normal text-gray-700">Select for study</span>
-                                </label>
-                            </div>
-                        </div>
-                        <span class="arrow-icon transition-transform duration-300 transform rotate-0 ml-4">▼</span>
-                    </summary>
-                    <div class="details-content">
-                        ${encounter.mainContentHTML}
-                        <div class="flex flex-col gap-4 mt-6">
-                            <button onclick="openModal('${key}', 'context')" class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transform hover:scale-105">
-                                🔍 Explore Historical Context
-                            </button>
-                            <button onclick="generateLLMResponse('${key}', 'prayer')" class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-purple-700 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-105">
-                                🙏 Generate Personalized Prayer
-                            </button>
-                            <button onclick="generateLLMResponse('${key}', 'commentary')" class="w-full bg-indigo-500 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 transform hover:scale-105">
-                                📚 Get Deeper Commentary
-                            </button>
-                        </div>
-                    </div>
-                `;
-                mainContainer.appendChild(detailsElement);
-
-                // Add event listener for checkbox
-                const checkbox = detailsElement.querySelector(`[data-checkbox-${key}]`);
-                const input = detailsElement.querySelector(`[data-input-${key}]`);
-
-                checkbox.addEventListener('change', function(e) {
-                    const name = input.value.trim();
-                    if (this.checked) { // User is trying to check the box
-                        if (name) {
-                            // Confirm permanent save
-                            if (confirm(`Would you like to save "${name}" for ${encounter.title} permanently? This cannot be undone.`)) {
-                                updateSelection(key, name); // Save the selection (isSelected is implicitly true for save)
-                                input.readOnly = true; // Make input read-only
-                                input.classList.add('bg-gray-100', 'cursor-not-allowed'); // Add styling for disabled input
-                                this.disabled = true; // Disable checkbox
-                            } else {
-                                this.checked = false; // User cancelled, so uncheck the box
-                            }
-                        } else {
-                            // Name is empty, alert and prevent checking
-                            alert('Please enter your name before selecting this encounter.');
-                            this.checked = false;
-                        }
-                    } else { // User is trying to uncheck the box
-                        // If userSelections[key] exists, it means it was permanently saved.
-                        if (userSelections[key]) {
-                            alert(`"${userSelections[key]}" is already saved for ${encounter.title} and cannot be unchecked.`);
-                            this.checked = true; // Force it back to checked
-                        }
-                        // If it was never saved (userSelections[key] doesn't exist),
-                        // and they unchecked it, no action is needed as per the requirement
-                        // for permanence on saving.
-                    }
-                });
-            }
-        }
-
-        // Update the updateSelection function
-        function updateSelection(encounterId, name) {
-            // With permanence, we only add/update to userSelections.
-            userSelections[encounterId] = name.trim();
-            localStorage.setItem('bibleStudySelections', JSON.stringify(userSelections));
-            console.log(`Permanent selection saved for ${encounterId}: ${name}`);
-        }
-
-        // Function to restore saved selections
-        function restoreSavedSelections() {
-            const savedSelections = localStorage.getItem('bibleStudySelections');
-            if (savedSelections) {
-                try {
-                    const selections = JSON.parse(savedSelections);
-                    Object.entries(selections).forEach(([key, name]) => {
-                        const input = document.querySelector(`[data-input-${key}]`);
-                        const checkbox = document.querySelector(`[data-checkbox-${key}]`);
-                        if (input && checkbox) {
-                            input.value = name;
-                            input.readOnly = true; // Make input read-only
-                            input.classList.add('bg-gray-100', 'cursor-not-allowed'); // Add styling for disabled input
-                            checkbox.checked = true;
-                            checkbox.disabled = true; // Disable checkbox
-                            // Also update the in-memory userSelections to reflect restored state
-                            userSelections[key] = name;
-                        }
-                    });
-                    console.log('Saved selections restored:', selections);
-                } catch (error) {
-                    console.error('Error restoring saved selections:', error);
-                }
-            }
-        }
-
-        // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Loading encounters...');
-            loadEncounters();
+            const navMenu = document.getElementById('nav-menu');
+            const contentArea = document.getElementById('content-area');
+            const initialMessage = document.getElementById('initial-message');
+            const contentSections = contentArea.querySelectorAll('.content-section');
+            const navCards = navMenu.querySelectorAll('.nav-card');
+            
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const body = document.body;
 
-            // Wait a short moment for the DOM to be fully updated before restoring
-            // to ensure all elements are present.
-            setTimeout(() => {
-                console.log('Restoring saved selections...');
-                restoreSavedSelections();
-            }, 100);
-        });
+            const applyTheme = (theme) => {
+                body.classList.remove('light', 'dark');
+                body.classList.add(theme);
+                lightIcon.classList.toggle('hidden', theme === 'dark');
+                darkIcon.classList.toggle('hidden', theme === 'light');
+                localStorage.setItem('theme', theme);
+            };
+            
+            applyTheme(localStorage.getItem('theme') || 'light');
 
-        // Add window load handler to verify everything is loaded properly
-        window.addEventListener('load', () => {
-            console.log('Page fully loaded, selections state:', userSelections);
-        });
+            themeToggleBtn.addEventListener('click', () => {
+                const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+                applyTheme(newTheme);
+            });
 
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalTitle = document.getElementById('modal-title');
-        const modalBody = document.getElementById('modal-body');
-        const llmResponseArea = document.getElementById('llm-response-area');
-        const llmResponseTitle = document.getElementById('llm-response-title');
-        const llmResponseContent = document.getElementById('llm-response-content');
-        const loadingIndicator = document.getElementById('loading-indicator');
+            navMenu.addEventListener('click', (e) => {
+                const card = e.target.closest('.nav-card');
+                if (!card) return;
 
-        function openModal(encounterId, type) {
-            const data = encountersData[encounterId];
-            llmResponseArea.classList.add('hidden'); // Hide LLM response area by default
+                const day = card.dataset.day;
+                initialMessage.style.display = 'none';
+                navCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                card.classList.add('bouncing');
+                card.addEventListener('animationend', () => card.classList.remove('bouncing'), { once: true });
 
-            if (type === 'context') {
-                modalTitle.innerText = `${data.title}: Extra Context`;
-                modalBody.innerHTML = data.modalContextHTML;
-                llmResponseArea.classList.add('hidden'); // Ensure LLM section is hidden for context
-            } else {
-                // This case is handled by generateLLMResponse, which will update modal content
-                // Just ensuring the modal opens
-                modalTitle.innerText = ''; // Clear title for LLM content until generated
-                modalBody.innerHTML = '';  // Clear body for LLM content until generated
-            }
-
-            modalOverlay.classList.add('visible');
-        }
-
-        function closeModal() {
-            modalOverlay.classList.remove('visible');
-            llmResponseArea.classList.add('hidden'); // Always hide LLM response area on close
-            llmResponseContent.innerText = ''; // Clear LLM content
-            loadingIndicator.classList.add('hidden'); // Hide loading indicator
-        }
-
-        // Close modal when clicking outside content
-        modalOverlay.addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
-                closeModal();
-            }
-        });
-
-        async function generateLLMResponse(encounterId, responseType) {
-            const encounter = encountersData[encounterId];
-            let prompt = '';
-            let responseTitle = '';
-
-            if (responseType === 'prayer') {
-                prompt = `Generate a personalized prayer inspired by the divine encounter of ${encounter.title} from ${encounter.bibleRef}. Focus on the key verse and inspiration, incorporating themes of ${encounter.title}. The prayer should be concise and heartfelt.`;
-                responseTitle = `Personalized Prayer for ${encounter.title}`;
-            } else if (responseType === 'commentary') {
-                prompt = `Expand on the commentary for the divine encounter of ${encounter.title} from ${encounter.bibleRef}. Use the following context to provide deeper insights and theological reflection:
-                ${encounter.llmPromptContext}
-                Aim for about 200-300 words, focusing on historical context, key verse, and life application.`;
-                responseTitle = `Expanded Commentary for ${encounter.title}`;
-            }
-
-            openModal(encounterId, responseType); // Open modal with generic title, then update
-            modalTitle.innerText = responseTitle; // Set the title immediately
-            modalBody.innerHTML = ''; // Clear main modal body
-            llmResponseArea.classList.remove('hidden'); // Show LLM response area
-            llmResponseTitle.innerText = ''; // Clear previous LLM title
-            llmResponseContent.innerText = ''; // Clear previous LLM content
-            loadingIndicator.classList.remove('hidden'); // Show loading indicator
-
-            try {
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyDau5t4329ezFMf1zF6AFKPZazW6QFvRhY"; // Canvas will automatically provide the API key
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', section.id === `day-${day}`);
                 });
+            });
 
-                // Check if the response content type is JSON before parsing
-                const contentType = response.headers.get('Content-Type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    const textResponse = await response.text(); // Read as text for better error reporting
-                    console.error('API Error: Expected JSON, got non-JSON response.', textResponse);
-                    llmResponseContent.innerHTML = `<p class="text-red-600">Error: Unexpected response format from API. Received: <pre>${textResponse.substring(0, 200)}...</pre></p>`;
-                    return;
-                }
-
-                let result;
-                try {
-                    result = await response.json();
-                } catch (jsonError) {
-                    // Catch JSON parsing errors specifically
-                    const rawText = await response.text(); // Attempt to get raw text for debugging
-                    console.error('JSON parsing error:', jsonError, 'Raw response:', rawText);
-                    llmResponseContent.innerHTML = `<p class="text-red-600">Error parsing API response. Data might be incomplete or malformed. Details: ${jsonError.message}. Raw: ${rawText.substring(0, 200)}...</p>`;
-                    return;
-                }
-
-                if (!response.ok) {
-                    console.error('API Error:', result);
-                    llmResponseContent.innerHTML = `<p class="text-red-600">Error generating content: ${result.error ? result.error.message : 'Unknown error'}.</p>`;
-                    return;
-                }
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    llmResponseContent.innerText = text;
-                } else {
-                    llmResponseContent.innerText = 'No content generated. Please try again.';
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                llmResponseContent.innerText = `An error occurred: ${error.message}. Please check your network connection or try again.`;
-            } finally {
-                loadingIndicator.classList.add('hidden'); // Hide loading indicator
+            const firstCard = navMenu.querySelector('.nav-card[data-day="1"]');
+            if(firstCard){
+                firstCard.click();
             }
-        }
+
+            const modal = document.getElementById('context-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalText = document.getElementById('modal-text');
+            const spinner = modal.querySelector('.loading-spinner-container');
+            
+            const openModal = () => modal.classList.remove('hidden');
+            const closeModal = () => modal.classList.add('hidden');
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+            contentArea.addEventListener('click', (e) => {
+                const target = e.target.closest('.context-link, .gemini-action');
+                if (!target) return;
+
+                spinner.style.display = 'flex';
+                modalText.innerHTML = '';
+                openModal();
+
+                let prompt = '';
+                if (target.matches('.context-link')) {
+                    const term = target.dataset.term;
+                    modalTitle.textContent = `About: ${target.textContent}`;
+                    prompt = `Explain the biblical significance of "${term}". Describe what it means, its context in the Bible, and why it is important for a Christian's understanding of faith. Format the response in simple HTML with paragraphs.`;
+                } else if (target.matches('.gemini-action')) {
+                    const action = target.dataset.action;
+                    const sermonSection = target.closest('.content-section');
+                    const sermonTitle = sermonSection.querySelector('h2').textContent;
+                    let sermonContent = Array.from(sermonSection.querySelectorAll('h2, h4, h5, p, li')).map(el => el.textContent).join('\n');
+                    
+                    if (action === 'reflect') {
+                        modalTitle.textContent = `Reflection for ${sermonTitle}`;
+                        prompt = `Based on the following sermon about "${sermonTitle}", please generate a short, personal prayer and 2-3 reflection questions to help someone apply this message to their life. The sermon content is: """${sermonContent}""". Format the response with '### Prayer' and '### Reflection Questions' headings. Use Markdown for formatting.`;
+                    } else if (action === 'summarize') {
+                        modalTitle.textContent = `Summary of ${sermonTitle}`;
+                        prompt = `Please summarize the key takeaways of the following sermon into 3-4 concise bullet points. The sermon is titled "${sermonTitle}" and the content is: """${sermonContent}""". Use Markdown for formatting.`;
+                    }
+                }
+                fetchGeminiResponse(prompt);
+            });
+
+            async function fetchGeminiResponse(prompt) {
+                try {
+                    let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                    const payload = { contents: chatHistory };
+                    const apiKey = "AIzaSyDaauMyCsLnzdDTbaaWBMjYoWtjmcZbdx4";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const result = await response.json();
+                    let generatedText = "Sorry, I couldn't fetch the details at the moment. Please try again later.";
+                    if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
+                      let rawText = result.candidates[0].content.parts[0].text;
+                      
+                      // BUG FIX: Remove markdown code block fences
+                      rawText = rawText.replace(/^\`\`\`(html|markdown)?\s*\n?/, '').replace(/\s*\`\`\`$/, '');
+
+                      // Convert simple markdown to HTML
+                      generatedText = rawText
+                          .replace(/### (.*)/g, '<h4>$1</h4>')
+                          .replace(/^\* (.*)/gm, '<li>$1</li>')
+                          .replace(/\n/g, '<br />');
+
+                      // Wrap consecutive list items in a <ul> tag and fix breaks
+                      if (generatedText.includes('<li>')) {
+                        generatedText = generatedText.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+                        generatedText = generatedText.replace(/<\/li><br \/><li>/g, '</li><li>');
+                      }
+                    }
+                    
+                    spinner.style.display = 'none';
+                    modalText.innerHTML = generatedText;
+
+                } catch (error) {
+                    console.error("Error fetching Gemini response:", error);
+                    spinner.style.display = 'none';
+                    modalText.innerHTML = `<p class="text-red-500">Could not load the information. Please check your connection and try again.</p>`;
+                }
+            }
+        });
     </script>
+
 </body>
 </html>
